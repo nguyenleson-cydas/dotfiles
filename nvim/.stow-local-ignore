@@ -3,4 +3,3 @@
 \.config/nvim/\.gitignore
 \.config/nvim/\.DS_Store
 \.config/nvim/lazy-lock\.json
-\.config/nvim/\.neoconf\.json
