@@ -83,6 +83,10 @@ export PATH="$HOME/.local/share/bob/nvim-bin:${ASDF_DATA_DIR:-$HOME/.asdf}/shims
 XDG_CONFIG_HOME=$HOME/.config
 STARSHIP_CONFIG=$XDG_CONFIG_HOME/starship/starship.toml
 
+URANUS_BASE=http://localhost:50001/comet/api
+
+EDITOR=nvim
+
 # Shell integrations
 source <(fzf --zsh)
 eval "$(zoxide init zsh)"

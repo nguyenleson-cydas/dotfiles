@@ -10,3 +10,5 @@ vim.cmd([[let &t_Ce = "\e[4:0m"]])
 -- Enable spell check
 vim.opt.spell = true
 vim.opt.spelllang = { "en_us", "cjk" }
+
+vim.g.lazyvim_php_lsp = "intelephense"
