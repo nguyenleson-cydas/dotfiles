@@ -80,7 +80,8 @@ alias uw='cd $HOME/dev/intern/uranus/app/vue && ASDF_NODEJS_VERSION=10.15.2 npm 
 # Path
 export PATH="$HOME/.local/share/bob/nvim-bin:${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$HOME/.local/bin:$HOME/bin:$PATH"
 
-STARSHIP_CONFIG=$HOME/.config/starship/starship.toml
+XDG_CONFIG_HOME=$HOME/.config
+STARSHIP_CONFIG=$XDG_CONFIG_HOME/starship/starship.toml
 
 # Shell integrations
 source <(fzf --zsh)
