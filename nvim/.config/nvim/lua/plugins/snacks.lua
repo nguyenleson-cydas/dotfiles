@@ -3,6 +3,9 @@ return {
   opts = {
     explorer = { enabled = false },
     indent = { enabled = false },
+    notifier = {
+      timout = 10000,
+    },
   },
   keys = {
     { "<leader>fe", false },

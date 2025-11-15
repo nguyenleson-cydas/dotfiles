@@ -86,6 +86,7 @@ STARSHIP_CONFIG=$XDG_CONFIG_HOME/starship/starship.toml
 URANUS_BASE=http://localhost:50001/comet/api
 
 EDITOR=nvim
+TERM=xterm-256color
 
 # Shell integrations
 source <(fzf --zsh)
