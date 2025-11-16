@@ -1,11 +1,11 @@
 # cmd+shift+, to reload the config
 
-theme = "Solarized Dark Patched"
 
+theme = "Solarized Dark Patched"
 background-opacity = 0.9
 background-blur-radius = 20
 background = #031219
-
+macos-titlebar-style = hidden
 font-family = "PlemolJP Console NF"
 font-size = 15
 
