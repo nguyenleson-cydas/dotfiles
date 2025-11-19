@@ -74,7 +74,7 @@ alias ca='cursor-agent'
 
 # alias phpstan='docker run -v $PWD:/app --rm ghcr.io/phpstan/phpstan'
 
-alias us='cd $HOME/dev/intern/uranus/app/vue && ASDF_NODEJS_VERSION=10.15.2 npm start'
+alias us='cd $HOME/dev/intern/uranus/app/vue && ASDF_NODEJS_VERSION=10.15.2 NODE_OPTIONS='--max-old-space-size=10240' npm start'
 alias uw='cd $HOME/dev/intern/uranus/app/vue && ASDF_NODEJS_VERSION=10.15.2 npm run watch'
 
 # Path
@@ -96,3 +96,4 @@ eval "$(starship init zsh)"
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 
+export PATH="/opt/homebrew/opt/mysql@8.0/bin:$PATH"

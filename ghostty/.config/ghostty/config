@@ -11,6 +11,7 @@ font-size = 15
 
 cursor-style = block
 cursor-style-blink = true
+custom-shader = ~/.config/ghostty/shaders/cursor_smear.glsl
 
 #keybind = global:cmd+ctrl+shift+j=toggle_visibility
 
