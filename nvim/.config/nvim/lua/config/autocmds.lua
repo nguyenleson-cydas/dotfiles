@@ -6,23 +6,6 @@
 --
 -- Or remove existing autocmds by their group name (which is prefixed with `lazyvim_` for the defaults)
 -- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
-vim.api.nvim_create_autocmd({ "BufEnter", "BufReadPost", "FileReadPost", "BufNewFile" }, {
-  pattern = "*",
-  callback = function()
-    local filename = vim.fn.expand("%:~:.")
-    if filename ~= "" then
-      vim.fn.system("tmux select-pane -T '" .. filename .. "'")
-    end
-  end,
-})
-
--- Restore tmux pane title when exiting nvim
-vim.api.nvim_create_autocmd("VimLeavePre", {
-  pattern = "*",
-  callback = function()
-    vim.fn.system("tmux select-pane -T ''")
-  end,
-})
 
 -- User command to insert date/time timestamp
 vim.api.nvim_create_user_command("InsertTimestamp", function()

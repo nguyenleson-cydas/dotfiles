@@ -78,7 +78,7 @@ alias us='ASDF_NODEJS_VERSION=10.15.2 npm --prefix $HOME/dev/intern/uranus/app/v
 alias uw='ASDF_NODEJS_VERSION=10.15.2 npm --prefix $HOME/dev/intern/uranus/app/vue run watch'
 
 # Path
-export PATH="$HOME/.local/share/bob/nvim-bin:${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$HOME/.local/bin:$HOME/bin:$PATH"
+export PATH="$HOME/.local/share/bob/nvim-bin:${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$HOME/.local/bin:$HOME/bin:$HOME/.composer/vendor/bin:$PATH"
 
 XDG_CONFIG_HOME=$HOME/.config
 STARSHIP_CONFIG=$XDG_CONFIG_HOME/starship/starship.toml
@@ -97,3 +97,5 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 
 
 export PATH="/opt/homebrew/opt/mysql@8.0/bin:$PATH"
+export PATH="/Users/fre_nguyen_s/.config/herd-lite/bin:$PATH"
+export PHP_INI_SCAN_DIR="/Users/fre_nguyen_s/.config/herd-lite/bin:$PHP_INI_SCAN_DIR"

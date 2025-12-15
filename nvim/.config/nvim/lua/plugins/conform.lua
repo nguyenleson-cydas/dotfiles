@@ -10,7 +10,7 @@ return {
           return { "php_cs_fixer_uranus" }
         else
           -- Return nil or a different formatter for other projects
-          return { "php-cs-fixer" }
+          return { "php_cs_fixer" }
         end
       end,
     },

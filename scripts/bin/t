@@ -6,6 +6,7 @@ SEARCH_DIRS=(
   "$HOME/dev/personal"
   "$HOME/work/projects"
   "$HOME/learning"
+  "$HOME/notes"
 )
 
 FZF_PROMPT="Select a directory: "
