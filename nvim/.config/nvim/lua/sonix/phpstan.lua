@@ -88,11 +88,11 @@ M.analyse = function()
         end
       end
     end),
-    on_stderr = function(_, data)
-      -- if data and data ~= "" then
-      --   vim.notify("PHPStan: " .. data, vim.log.levels.WARN)
-      -- end
-    end,
+    -- on_stderr = function(_, data)
+    --   -- if data and data ~= "" then
+    --   --   vim.notify("PHPStan: " .. data, vim.log.levels.WARN)
+    --   -- end
+    -- end,
   }):start()
 end
 
@@ -107,35 +107,26 @@ M.analyse_debounced = function()
   end, 500)
 end
 
-M.setup = function(opts)
-  opts = opts or {}
-  local events = opts.events or { "BufWritePost" }
-
+M.setup = function()
   local group = vim.api.nvim_create_augroup("PHPStan", { clear = true })
 
-  -- Always run on BufWritePost
   vim.api.nvim_create_autocmd("BufWritePost", {
     pattern = "*.php",
     callback = M.analyse,
     group = group,
   })
 
-  -- Optional events
-  if vim.tbl_contains(events, "BufEnter") then
-    vim.api.nvim_create_autocmd("BufEnter", {
-      pattern = "*.php",
-      callback = M.analyse_debounced,
-      group = group,
-    })
-  end
+  vim.api.nvim_create_autocmd("BufEnter", {
+    pattern = "*.php",
+    callback = M.analyse_debounced,
+    group = group,
+  })
 
-  if vim.tbl_contains(events, "TextChanged") then
-    vim.api.nvim_create_autocmd("TextChanged", {
-      pattern = "*.php",
-      callback = M.analyse_debounced,
-      group = group,
-    })
-  end
+  vim.api.nvim_create_autocmd("TextChanged", {
+    pattern = "*.php",
+    callback = M.analyse_debounced,
+    group = group,
+  })
 
   -- Commands
   vim.api.nvim_create_user_command("PHPStanAnalyse", M.analyse, {

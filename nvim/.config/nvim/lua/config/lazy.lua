@@ -20,7 +20,17 @@ require("lazy").setup({
   },
   spec = {
     -- add LazyVim and import its plugins
-    { "LazyVim/LazyVim", import = "lazyvim.plugins" },
+    {
+      "LazyVim/LazyVim",
+      import = "lazyvim.plugins",
+      opts = {
+        colorscheme = "solarized-osaka",
+        news = {
+          lazyvim = true,
+          neovim = true,
+        },
+      },
+    },
     -- import/override with your plugins
     { import = "lazyvim.plugins.extras.lang.docker" },
     { import = "lazyvim.plugins.extras.lang.json" },
