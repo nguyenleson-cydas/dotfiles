@@ -7,6 +7,7 @@ SEARCH_DIRS=(
   "$HOME/work/projects"
   "$HOME/learning"
   "$HOME/notes"
+  "$HOME/.config"
 )
 
 FZF_PROMPT="Select a directory: "
@@ -16,12 +17,15 @@ FZF_LAYOUT="reverse"
 directories=()
 for dir in "${SEARCH_DIRS[@]}"; do
   if [[ -d "$dir" ]]; then
-    while IFS= read -r -d '' found_dir; do
-      # Only include subdirectories, not the search directory itself
-      if [[ "$found_dir" != "$dir" ]]; then
-        directories+=("$found_dir")
+    # List all items in directory and check if they're directories (including symlinks)
+    for item in "$dir"/* "$dir"/.*; do
+      # Skip . and ..
+      [[ "$item" == "$dir/." || "$item" == "$dir/.." ]] && continue
+      # Check if it's a directory (this will be true for both real dirs and symlinks to dirs)
+      if [[ -d "$item" ]]; then
+        directories+=("$item")
       fi
-    done < <(find "$dir" -mindepth 1 -maxdepth 1 -type d -print0 2>/dev/null)
+    done
   fi
 done
 
@@ -39,7 +43,11 @@ if [[ -z "$selected" ]]; then
   exit 0
 fi
 
+# Create session name from directory name
 session_name=$(basename "$selected")
+
+# Clean up session name for tmux (no spaces, special characters)
+session_name=$(echo "$session_name" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9_-]/-/g' | sed 's/-\+/-/g')
 
 if [[ -z "$TMUX" ]]; then
   # Outside tmux
