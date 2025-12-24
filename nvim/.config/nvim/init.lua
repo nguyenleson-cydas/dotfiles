@@ -27,6 +27,7 @@ vim.o.cursorline = true
 vim.o.scrolloff = 10
 vim.o.confirm = true
 vim.o.winborder = 'rounded'
+vim.o.laststatus = 3
 
 vim.g.netrw_preview = 1
 vim.g.netrw_winsize = 30
@@ -47,8 +48,10 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.wo.conceallevel = 0
   end,
 })
-
 -- [[ Basic Keymaps ]]
+vim.keymap.set('n', '<space><space>x', '<cmd>source %<CR>')
+vim.keymap.set('n', '<space>x', ':.lua<CR>')
+vim.keymap.set('v', '<space>x', ':lua<CR>')
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
