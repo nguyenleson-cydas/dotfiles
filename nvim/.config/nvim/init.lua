@@ -131,7 +131,6 @@ vim.pack.add {
   'https://github.com/mfussenegger/nvim-dap.git',
   'https://github.com/jay-babu/mason-nvim-dap.nvim.git',
   'https://github.com/zbirenbaum/copilot.lua.git',
-  'https://github.com/prichrd/netrw.nvim.git',
 }
 
 require('gitsigns').setup {
