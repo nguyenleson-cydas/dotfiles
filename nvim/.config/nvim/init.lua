@@ -316,13 +316,21 @@ require('which-key').setup {
 require('snacks').setup {
   bigfile = { enabled = true },
   input = { enabled = true },
+  notifier = {
+    enabled = true,
+    timeout = 3000,
+  },
   picker = { enabled = true },
-  notifier = { enabled = true },
   quickfile = { enabled = true },
   scope = { enabled = true },
   scroll = { enabled = true },
   statuscolumn = { enabled = true },
   words = { enabled = true },
+  styles = {
+    notification = {
+      -- wo = { wrap = true } -- Wrap notifications
+    },
+  },
 }
 
 -- Top Pickers & Explorer
@@ -508,62 +516,15 @@ vim.keymap.set('n', '<c-_>', function()
   Snacks.terminal()
 end, { desc = 'which_key_ignore' })
 
+Snacks.toggle.inlay_hints():map '<leader>uh'
+
 require('lazydev').setup {
   library = {
-    -- Load luvit types when the `vim.uv` word is found
     { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
   },
 }
 
 require('fidget').setup {}
-
-vim.api.nvim_create_autocmd('LspAttach', {
-  group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
-  callback = function(event)
-    local map = function(keys, func, desc, mode)
-      mode = mode or 'n'
-      vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
-    end
-    -- This function resolves a difference between neovim nightly (version 0.11) and stable (version 0.10)
-    ---@param client vim.lsp.Client
-    ---@param method vim.lsp.protocol.Method
-    ---@param bufnr? integer some lsp support methods only in specific files
-    ---@return boolean
-    local function client_supports_method(client, method, bufnr)
-      return client:supports_method(method, bufnr)
-    end
-
-    local client = vim.lsp.get_client_by_id(event.data.client_id)
-    if client and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf) then
-      local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
-      vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
-        buffer = event.buf,
-        group = highlight_augroup,
-        callback = vim.lsp.buf.document_highlight,
-      })
-
-      vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
-        buffer = event.buf,
-        group = highlight_augroup,
-        callback = vim.lsp.buf.clear_references,
-      })
-
-      vim.api.nvim_create_autocmd('LspDetach', {
-        group = vim.api.nvim_create_augroup('kickstart-lsp-detach', { clear = true }),
-        callback = function(event2)
-          vim.lsp.buf.clear_references()
-          vim.api.nvim_clear_autocmds { group = 'kickstart-lsp-highlight', buffer = event2.buf }
-        end,
-      })
-    end
-
-    if client and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf) then
-      map('<leader>th', function()
-        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
-      end, '[T]oggle Inlay [H]ints')
-    end
-  end,
-})
 
 vim.diagnostic.config {
   severity_sort = true,
