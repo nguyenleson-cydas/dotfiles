@@ -36,7 +36,12 @@ if [[ ${#directories[@]} -eq 0 ]]; then
 fi
 
 # Select directory with fzf
-selected=$(printf '%s\n' "${directories[@]}" | fzf --prompt="$FZF_PROMPT" --layout="$FZF_LAYOUT")
+# Don't use --tmux when running in a popup (it conflicts)
+if [[ -n "$IN_TMUX_POPUP" ]]; then
+  selected=$(printf '%s\n' "${directories[@]}" | fzf --prompt="$FZF_PROMPT" --layout="$FZF_LAYOUT")
+else
+  selected=$(printf '%s\n' "${directories[@]}" | fzf --tmux center --prompt="$FZF_PROMPT" --layout="$FZF_LAYOUT")
+fi
 
 # Exit if no directory was selected
 if [[ -z "$selected" ]]; then
