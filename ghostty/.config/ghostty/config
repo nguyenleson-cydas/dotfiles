@@ -1,7 +1,7 @@
 # cmd+shift+, to reload the config
 
 theme = "Solarized Dark Patched"
-background = #031219
+background = #00141A
 foreground = #EEE8D5
 background-opacity = 0.9
 background-blur-radius = 20

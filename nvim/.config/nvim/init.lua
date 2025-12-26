@@ -42,6 +42,11 @@ vim.pack.add {
   'https://github.com/tpope/vim-dadbod.git',
   'https://github.com/folke/snacks.nvim.git',
   'https://github.com/norcalli/nvim-colorizer.lua.git',
+  'https://github.com/folke/noice.nvim.git',
+  'https://github.com/MunifTanjim/nui.nvim.git',
+  'https://github.com/rcarriga/nvim-notify.git',
+  'https://github.com/nvim-tree/nvim-web-devicons.git',
+  'https://github.com/b0o/incline.nvim',
 }
 
 vim.g.mapleader = ' '
@@ -72,7 +77,7 @@ vim.o.cursorline = true
 vim.o.scrolloff = 10
 vim.o.confirm = true
 vim.o.winborder = 'rounded'
-vim.o.laststatus = 3
+vim.opt.showmode = false
 
 vim.g.netrw_preview = 1
 vim.g.netrw_winsize = 30
@@ -509,10 +514,10 @@ end, { desc = 'Git Browse' })
 vim.keymap.set('n', '<leader>un', function()
   Snacks.notifier.hide()
 end, { desc = 'Dismiss All Notifications' })
-vim.keymap.set('n', '<c-/>', function()
+vim.keymap.set({ 'n', 't' }, '<c-/>', function()
   Snacks.terminal()
 end, { desc = 'Toggle Terminal' })
-vim.keymap.set('n', '<c-_>', function()
+vim.keymap.set({ 'n', 't' }, '<c-_>', function()
   Snacks.terminal()
 end, { desc = 'which_key_ignore' })
 
@@ -743,12 +748,171 @@ require('mini.surround').setup()
 require('mini.icons').setup()
 require('mini.pairs').setup()
 
-local statusline = require 'mini.statusline'
-statusline.setup { use_icons = vim.g.have_nerd_font }
----@diagnostic disable-next-line: duplicate-set-field
-statusline.section_location = function()
-  return '%2l:%-2v'
-end
+require('noice').setup {
+  lsp = {
+    -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+    override = {
+      ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
+      ['vim.lsp.util.stylize_markdown'] = true,
+      ['cmp.entry.get_documentation'] = true, -- requires hrsh7th/nvim-cmp
+    },
+  },
+  -- you can enable a preset for easier configuration
+  presets = {
+    bottom_search = true, -- use a classic bottom cmdline for search
+    command_palette = true, -- position the cmdline and popupmenu together
+    long_message_to_split = true, -- long messages will be sent to a split
+    inc_rename = false, -- enables an input dialog for inc-rename.nvim
+    lsp_doc_border = true, -- add a border to hover docs and signature help
+  },
+}
+
+-- <c-.> across normal/terminal/insert/visual
+vim.keymap.set({ 'n', 't', 'i', 'x' }, '<c-.>', function()
+  require('sidekick.cli').toggle()
+end, { desc = 'Sidekick Toggle' })
+
+-- <leader>aa
+vim.keymap.set('n', '<leader>aa', function()
+  require('sidekick.cli').toggle()
+end, { desc = 'Sidekick Toggle CLI' })
+
+-- <leader>as
+vim.keymap.set('n', '<leader>as', function()
+  require('sidekick.cli').select()
+end, { desc = 'Select CLI' })
+-- Only installed tools example:
+-- vim.keymap.set('n', '<leader>as', function()
+--   require('sidekick.cli').select({ filter = { installed = true } })
+-- end, { desc = 'Select CLI (installed only)' })
+
+-- <leader>at in visual and normal
+vim.keymap.set({ 'x', 'n' }, '<leader>at', function()
+  require('sidekick.cli').send { msg = '{this}' }
+end, { desc = 'Send This' })
+
+-- <leader>af
+vim.keymap.set('n', '<leader>af', function()
+  require('sidekick.cli').send { msg = '{file}' }
+end, { desc = 'Send File' })
+
+-- <leader>av in visual
+vim.keymap.set('x', '<leader>av', function()
+  require('sidekick.cli').send { msg = '{selection}' }
+end, { desc = 'Send Visual Selection' })
+
+-- <leader>ap in normal and visual
+vim.keymap.set({ 'n', 'x' }, '<leader>ap', function()
+  require('sidekick.cli').prompt()
+end, { desc = 'Sidekick Select Prompt' })
+
+-- <leader>ac open Claude directly
+vim.keymap.set('n', '<leader>ac', function()
+  require('sidekick.cli').toggle { name = 'claude', focus = true }
+end, { desc = 'Sidekick Toggle Claude' })
+
+local devicons = require 'nvim-web-devicons'
+
+require('incline').setup {
+  window = { placement = { vertical = 'top', horizontal = 'left' } },
+  render = function(props)
+    local bufname = vim.api.nvim_buf_get_name(props.buf)
+    local filename = vim.fn.fnamemodify(bufname, ':t')
+    if filename == '' then
+      filename = '[No Name]'
+    end
+
+    local ft_icon, ft_color = devicons.get_icon_color(filename)
+
+    local function build_path_label()
+      if bufname == '' then
+        return nil
+      end
+
+      local dir_abs = vim.fn.fnamemodify(bufname, ':p:h') -- directory part (absolute)
+      local shortened = vim.fn.pathshorten(dir_abs)
+      local label = (shortened ~= '' and shortened) or dir_abs
+      return label
+    end
+
+    local function get_git_diff()
+      local icons = { removed = ' ', changed = ' ', added = ' ' }
+      local signs = vim.b[props.buf].gitsigns_status_dict
+      local labels = {}
+      if signs == nil then
+        return labels
+      end
+      for name, icon in pairs(icons) do
+        if tonumber(signs[name]) and signs[name] > 0 then
+          table.insert(labels, { icon .. signs[name] .. ' ', group = 'Diff' .. name })
+        end
+      end
+      if #labels > 0 then
+        table.insert(labels, { '┊ ' })
+      end
+      return labels
+    end
+
+    local function get_diagnostic_label()
+      local icons = {
+        error = '󰅚 ',
+        warn = '󰀪 ',
+        info = '󰋽 ',
+        hint = '󰌶 ',
+      }
+      local label = {}
+      for severity, icon in pairs(icons) do
+        local n = #vim.diagnostic.get(props.buf, { severity = vim.diagnostic.severity[string.upper(severity)] })
+        if n > 0 then
+          table.insert(label, { icon .. n .. ' ', group = 'DiagnosticSign' .. severity })
+        end
+      end
+      if #label > 0 then
+        table.insert(label, { '┊ ' })
+      end
+      return label
+    end
+
+    local path_label = build_path_label()
+    local is_modified = vim.bo[props.buf].modified
+
+    return {
+      { get_diagnostic_label() },
+      { get_git_diff() },
+      { (ft_icon or '') .. ' ', guifg = ft_color, guibg = 'none' },
+      { filename, gui = is_modified and 'bold,italic' or 'bold' },
+      -- Path immediately to the right of the filename
+      path_label and { '  ', path_label, group = 'Comment' } or '',
+      { '  ┊  ' .. vim.api.nvim_win_get_number(props.win), group = 'DevIconWindows' },
+    }
+  end,
+}
+
+-- local bar = require 'dropbar.bar'
+--
+-- require('dropbar').setup {
+--   bar = {
+--     sources = function()
+--       local sources = require 'dropbar.sources'
+--       return { sources.path }
+--     end,
+--   },
+--   icons = {
+--     kinds = {
+--       dir_icon = function()
+--         return nil, nil
+--       end,
+--     },
+--   },
+--   sources = {
+--     path = {
+--       max_depth = 5,
+--     },
+--   },
+--   symbol = {
+--     on_click = function() end,
+--   },
+-- }
 
 require('solarized-osaka').setup {}
 
@@ -1132,8 +1296,24 @@ for _, key in ipairs(NAV_KEYS) do
   end, { expr = true, silent = true })
 end
 
-vim.api.nvim_set_hl(0, 'BlinkCmpMenu', { link = 'NormalFloat' })
-vim.api.nvim_set_hl(0, 'BlinkCmpMenuBorder', { link = 'NormalFloat' })
+vim.api.nvim_set_hl(0, 'BlinkCmpMenu', { link = 'NONE' })
+vim.api.nvim_set_hl(0, 'BlinkCmpMenuBorder', { link = 'NONE' })
+vim.api.nvim_set_hl(0, 'FloatBorder', { bg = 'NONE' })
+
+vim.opt.laststatus = 0
+vim.api.nvim_set_hl(0, 'StatusLine', { link = 'Normal' })
+vim.api.nvim_set_hl(0, 'StatusLineNC', { link = 'Normal' })
+local function make_line(width)
+  return string.rep('─', width)
+end
+local function update_statusline()
+  local width = vim.api.nvim_win_get_width(0)
+  vim.wo.statusline = make_line(width)
+end
+update_statusline()
+vim.api.nvim_create_autocmd({ 'WinEnter', 'VimResized', 'WinResized', 'WinNew', 'BufWinEnter' }, {
+  callback = update_statusline,
+})
 
 require('colorizer').setup()
 

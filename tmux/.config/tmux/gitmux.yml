@@ -1,0 +1,39 @@
+#
+#  ██████╗ ██╗████████╗███╗   ███╗██╗   ██╗██╗  ██╗
+# ██╔════╝ ██║╚══██╔══╝████╗ ████║██║   ██║╚██╗██╔╝
+# ██║  ███╗██║   ██║   ██╔████╔██║██║   ██║ ╚███╔╝
+# ██║   ██║██║   ██║   ██║╚██╔╝██║██║   ██║ ██╔██╗
+# ╚██████╔╝██║   ██║   ██║ ╚═╝ ██║╚██████╔╝██╔╝ ██╗
+#  ╚═════╝ ╚═╝   ╚═╝   ╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═╝
+#
+# Git in your tmux status bar
+# https://github.com/arl/gitmux
+
+tmux:
+  symbols:
+    ahead: "↑"
+    behind: "↓"
+    clean: ""
+    branch: " "
+    hashprefix: ":"
+    staged: " "
+    conflict: "󰕚 "
+    untracked: "󱀶 "
+    modified: " "
+    stashed: " "
+    insertions: " "
+    deletions: " "
+  styles:
+    state: "#[fg=#DC322F,nobold]"
+    branch: "#[fg=#93A1A1,italics]"
+    staged: "#[fg=#859900,nobold]"
+    conflict: "#[fg=#DC322F,nobold]"
+    modified: "#[fg=#B58900,nobold]"
+    untracked: "#[fg=#D33682,nobold]"
+    stashed: "#[fg=#586E75,nobold]"
+    clean: "#[fg=#859900,nobold]"
+    divergence: "#[fg=#2AA198,nobold]"
+  layout: [branch, divergence, flags, stats]
+  options:
+    branch_max_len: 0
+    hide_clean: false
