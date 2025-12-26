@@ -889,7 +889,9 @@ require('incline').setup {
     end
 
     for _, label in ipairs(diagnostic_labels) do
-      table.insert(result, label)
+      if has_git_diff then
+        table.insert(result, label)
+      end
     end
     for _, label in ipairs(git_diff_labels) do
       table.insert(result, label)
