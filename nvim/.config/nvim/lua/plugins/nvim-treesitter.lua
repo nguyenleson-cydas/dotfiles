@@ -28,14 +28,9 @@ require('nvim-treesitter.configs').setup {
     'css',
     'scss',
   },
-  -- Autoinstall languages that are not installed
   auto_install = true,
   highlight = {
     enable = true,
-    -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
-    --  If you are experiencing weird indenting issues, add the language to
-    --  the list of additional_vim_regex_highlighting and disabled languages for indent.
-    additional_vim_regex_highlighting = { 'ruby', 'php' },
     disable = function(_, buf)
       local max_filesize = 1.5 * 1024 * 1024 -- 1.5 MB
       local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
@@ -44,7 +39,6 @@ require('nvim-treesitter.configs').setup {
       end
     end,
   },
-  indent = { enable = true, disable = { 'ruby', 'php' } },
 }
 
 require('nvim-treesitter.configs').setup {

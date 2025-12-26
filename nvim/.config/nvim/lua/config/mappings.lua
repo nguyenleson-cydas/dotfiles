@@ -39,8 +39,6 @@ vim.keymap.set('n', 'N', "'nN'[v:searchforward].'zv'", { expr = true, desc = 'Pr
 vim.keymap.set('x', 'N', "'nN'[v:searchforward]", { expr = true, desc = 'Prev Search Result' })
 vim.keymap.set('o', 'N', "'nN'[v:searchforward]", { expr = true, desc = 'Prev Search Result' })
 
-vim.keymap.set('n', '\\', '<cmd>Explore %:p:h<CR>', { desc = 'Open file explorer in current file directory' })
-
 vim.keymap.set('n', '<leader>yp', function()
   local path = vim.fn.expand '%'
   vim.fn.setreg('+', path)

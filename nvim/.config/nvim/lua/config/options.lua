@@ -27,12 +27,12 @@ vim.o.scrolloff = 10
 vim.o.confirm = true
 vim.o.winborder = 'rounded'
 vim.opt.showmode = false
-
-vim.g.netrw_preview = 1
-vim.g.netrw_winsize = 30
-vim.g.netrw_bufsettings = 'noma nomod nonu nobl nowrap ro rnu'
-
 vim.opt.conceallevel = 2
+vim.opt.expandtab = true
+vim.opt.shiftround = true
+vim.opt.shiftwidth = 2
+vim.opt.smartindent = true
+vim.opt.tabstop = 2
 vim.wo.foldmethod = 'expr'
 vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 vim.opt.foldlevel = 99
@@ -40,7 +40,6 @@ vim.cmd [[let &t_Cs = "\e[4:3m"]]
 vim.cmd [[let &t_Ce = "\e[4:0m"]]
 vim.opt.spell = true
 vim.opt.spelllang = { 'en_us', 'cjk' }
-
 vim.opt.laststatus = 0
 vim.api.nvim_set_hl(0, 'StatusLine', { link = 'Normal' })
 vim.api.nvim_set_hl(0, 'StatusLineNC', { link = 'Normal' })

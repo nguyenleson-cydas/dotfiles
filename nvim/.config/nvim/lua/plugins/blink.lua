@@ -40,18 +40,14 @@ vim.api.nvim_create_autocmd('InsertEnter', {
         },
       },
       sources = {
-        default = function(ctx)
-          local success, node = pcall(vim.treesitter.get_node)
-          if success and node and vim.tbl_contains({ 'comment', 'line_comment', 'block_comment' }, node:type()) then
-            return { 'buffer' }
-          elseif vim.bo.filetype == 'lua' then
-            return { 'lsp', 'path' }
-          else
-            return { 'lsp', 'path', 'snippets', 'buffer' }
-          end
-        end,
+        default = { 'lsp', 'path', 'snippets', 'buffer' },
+        per_filetype = {
+          sql = { 'snippets', 'dadbod', 'buffer' },
+          mysql = { 'snippets', 'dadbod', 'buffer' },
+        },
         providers = {
           lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
+          dadbod = { module = 'vim_dadbod_completion.blink' },
         },
       },
       cmdline = {
