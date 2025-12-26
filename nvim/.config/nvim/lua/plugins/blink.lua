@@ -19,31 +19,60 @@ vim.api.nvim_create_autocmd('InsertEnter', {
     require('luasnip.loaders.from_vscode').lazy_load()
     require('blink-cmp').setup {
       keymap = {
-        -- you will need to read `:help ins-completion`
-        -- See :h blink-cmp-config-keymap for defining your own keymap
-        -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
-        --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
         preset = 'default',
       },
       appearance = {
         nerd_font_variant = 'mono',
+        use_nvim_cmp_as_default = false,
       },
       completion = {
         documentation = {
-          auto_show = false,
-          auto_show_delay_ms = 500,
+          auto_show = true,
+          auto_show_delay_ms = 200,
+        },
+        menu = {
+          draw = {
+            treesitter = { 'lsp' },
+          },
+        },
+        ghost_text = {
+          enabled = true,
         },
       },
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'lazydev' },
+        default = function(ctx)
+          local success, node = pcall(vim.treesitter.get_node)
+          if success and node and vim.tbl_contains({ 'comment', 'line_comment', 'block_comment' }, node:type()) then
+            return { 'buffer' }
+          elseif vim.bo.filetype == 'lua' then
+            return { 'lsp', 'path' }
+          else
+            return { 'lsp', 'path', 'snippets', 'buffer' }
+          end
+        end,
         providers = {
           lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
         },
       },
+      cmdline = {
+        enabled = true,
+        keymap = {
+          preset = 'cmdline',
+          ['<Right>'] = false,
+          ['<Left>'] = false,
+        },
+        completion = {
+          list = { selection = { preselect = false } },
+          menu = {
+            auto_show = function(ctx)
+              return vim.fn.getcmdtype() == ':'
+            end,
+          },
+          ghost_text = { enabled = true },
+        },
+      },
       snippets = { preset = 'luasnip' },
-      -- See :h blink-cmp-config-fuzzy for more information
       fuzzy = { implementation = 'prefer_rust_with_warning' },
-      -- signature = { enabled = true },
     }
   end,
 })
@@ -88,5 +117,20 @@ vim.api.nvim_create_autocmd('ColorScheme', {
     local c = require('solarized-osaka.colors').setup()
     vim.api.nvim_set_hl(0, 'BlinkCmpMenu', { fg = c.base01, bg = c.none })
     vim.api.nvim_set_hl(0, 'BlinkCmpMenuBorder', { fg = c.base02, bg = c.bg_float })
+  end,
+})
+
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'BlinkCmpMenuOpen',
+  callback = function()
+    require('copilot.suggestion').dismiss()
+    vim.b.copilot_suggestion_hidden = true
+  end,
+})
+
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'BlinkCmpMenuClose',
+  callback = function()
+    vim.b.copilot_suggestion_hidden = false
   end,
 })
