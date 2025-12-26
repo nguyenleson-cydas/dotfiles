@@ -37,7 +37,7 @@ require('nvim-treesitter.configs').setup {
     --  the list of additional_vim_regex_highlighting and disabled languages for indent.
     additional_vim_regex_highlighting = { 'ruby', 'php' },
     disable = function(_, buf)
-      local max_filesize = 0.5 * 1024 * 1024 -- 0.5 MB
+      local max_filesize = 1.5 * 1024 * 1024 -- 1.5 MB
       local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
       if ok and stats and stats.size > max_filesize then
         return true
