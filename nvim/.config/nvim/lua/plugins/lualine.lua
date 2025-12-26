@@ -4,6 +4,8 @@ vim.pack.add {
 }
 
 require('lualine').setup {
+  sections = {},
+  inactive_sections = {},
   options = { theme = 'auto', component_separators = '', section_separators = '' },
   winbar = {
     lualine_c = {
@@ -69,4 +71,5 @@ require('lualine').setup {
       },
     },
   },
+  inactive_winbar = {},
 }
