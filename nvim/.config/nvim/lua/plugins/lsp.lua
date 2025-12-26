@@ -63,3 +63,68 @@ vim.lsp.config('vue_ls', vue_ls_config)
 require('mason').setup {}
 require('mason-lspconfig').setup {}
 require('mason-tool-installer').setup { ensure_installed = ensure_installed }
+
+vim.keymap.set('n', 'grd', function()
+  Snacks.picker.lsp_definitions()
+end, { desc = 'Goto Definition' })
+vim.keymap.set('n', 'grD', function()
+  Snacks.picker.lsp_declarations()
+end, { desc = 'Goto Declaration' })
+vim.keymap.set('n', 'grr', function()
+  Snacks.picker.lsp_references()
+end, { nowait = true, desc = 'References' })
+vim.keymap.set('n', 'gri', function()
+  Snacks.picker.lsp_implementations()
+end, { desc = 'Goto Implementation' })
+vim.keymap.set('n', 'gy', function()
+  Snacks.picker.lsp_type_definitions()
+end, { desc = 'Goto T[y]pe Definition' })
+vim.keymap.set('n', 'gai', function()
+  Snacks.picker.lsp_incoming_calls()
+end, { desc = 'C[a]lls Incoming' })
+vim.keymap.set('n', 'gao', function()
+  Snacks.picker.lsp_outgoing_calls()
+end, { desc = 'C[a]lls Outgoing' })
+vim.keymap.set('n', '<leader>ss', function()
+  Snacks.picker.lsp_symbols()
+end, { desc = 'LSP Symbols' })
+vim.keymap.set('n', '<leader>sS', function()
+  Snacks.picker.lsp_workspace_symbols()
+end, { desc = 'LSP Workspace Symbols' })
+vim.keymap.set('n', 'K', function()
+  vim.lsp.buf.hover {
+    focus = true,
+    focusable = true,
+    wrap = true,
+    wrap_at = 100,
+    max_width = 100,
+    border = 'rounded',
+  }
+end)
+
+vim.diagnostic.config {
+  severity_sort = true,
+  float = { border = 'rounded', source = 'if_many' },
+  underline = { severity = vim.diagnostic.severity.ERROR },
+  signs = vim.g.have_nerd_font and {
+    text = {
+      [vim.diagnostic.severity.ERROR] = '󰅚 ',
+      [vim.diagnostic.severity.WARN] = '󰀪 ',
+      [vim.diagnostic.severity.INFO] = '󰋽 ',
+      [vim.diagnostic.severity.HINT] = '󰌶 ',
+    },
+  } or {},
+  virtual_text = {
+    source = 'if_many',
+    spacing = 2,
+    format = function(diagnostic)
+      local diagnostic_message = {
+        [vim.diagnostic.severity.ERROR] = diagnostic.message,
+        [vim.diagnostic.severity.WARN] = diagnostic.message,
+        [vim.diagnostic.severity.INFO] = diagnostic.message,
+        [vim.diagnostic.severity.HINT] = diagnostic.message,
+      }
+      return diagnostic_message[diagnostic.severity]
+    end,
+  },
+}

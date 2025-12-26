@@ -85,14 +85,3 @@ vim.keymap.set('n', '<leader>pc', function()
     end
   end)
 end, { desc = '[P]ack [C]lean' })
-
-vim.keymap.set('n', 'K', function()
-  vim.lsp.buf.hover {
-    focus = true,
-    focusable = true,
-    wrap = true,
-    wrap_at = 100,
-    max_width = 100,
-    border = 'rounded',
-  }
-end)
