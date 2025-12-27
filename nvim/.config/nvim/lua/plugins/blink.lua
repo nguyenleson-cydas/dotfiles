@@ -126,5 +126,6 @@ vim.api.nvim_create_autocmd('ColorScheme', {
     local c = require('solarized-osaka.colors').setup()
     vim.api.nvim_set_hl(0, 'BlinkCmpMenu', { fg = c.base01, bg = c.none })
     vim.api.nvim_set_hl(0, 'BlinkCmpMenuBorder', { fg = c.base02, bg = c.bg_float })
+    vim.api.nvim_set_hl(0, 'PmenuSel', { link = 'Visual' })
   end,
 })
