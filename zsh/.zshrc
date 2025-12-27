@@ -87,7 +87,7 @@ TERM=xterm-256color
 
 # Shell integrations
 source <(fzf --zsh)
-eval "$(zoxide init zsh)"
+eval "$(zoxide init --cmd j zsh)"
 eval "$(starship init zsh)"
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
