@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# Configuration - multiple search directories
 SEARCH_DIRS=(
   "$HOME/dev/intern"
   "$HOME/dev/personal"
+  "$HOME/dev/work"
   "$HOME/work/projects"
   "$HOME/learning"
   "$HOME/notes"
@@ -11,7 +11,6 @@ SEARCH_DIRS=(
 )
 
 FZF_PROMPT="Select a directory: "
-FZF_LAYOUT="reverse"
 
 # Find directories from all search paths
 directories=()
@@ -35,24 +34,13 @@ if [[ ${#directories[@]} -eq 0 ]]; then
   exit 1
 fi
 
-# Select directory with fzf
-# Don't use --tmux when running in a popup (it conflicts)
-if [[ -n "$IN_TMUX_POPUP" ]]; then
-  selected=$(printf '%s\n' "${directories[@]}" | fzf --prompt="$FZF_PROMPT")
-else
-  selected=$(printf '%s\n' "${directories[@]}" | fzf --tmux center --prompt="$FZF_PROMPT")
-fi
+selected=$(printf '%s\n' "${directories[@]}" | fzf --tmux center --border rounded --prompt="$FZF_PROMPT")
 
-# Exit if no directory was selected
 if [[ -z "$selected" ]]; then
   exit 0
 fi
 
-# Create session name from directory name
 session_name=$(basename "$selected")
-
-# Clean up session name for tmux (no spaces, special characters)
-session_name=$(echo "$session_name" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9_-]/-/g' | sed 's/-\+/-/g')
 
 if [[ -z "$TMUX" ]]; then
   # Outside tmux
