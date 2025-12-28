@@ -13,24 +13,7 @@ require('lualine').setup {
       { 'filename', path = 0, padding = { left = 1, right = 1 } },
       {
         function()
-          local bufname = vim.api.nvim_buf_get_name(0)
-          if bufname == '' then
-            return ''
-          end
-          local git_root_cmd = 'git rev-parse --show-toplevel 2>/dev/null'
-          local git_root = vim.fn.trim(vim.fn.system(git_root_cmd))
-          if git_root == '' or vim.v.shell_error ~= 0 then
-            return ''
-          end
-          local abs_path = vim.fn.fnamemodify(bufname, ':p')
-          local relative_path = string.gsub(abs_path, '^' .. git_root, '')
-          relative_path = string.gsub(relative_path, '^/', '')
-          local dir_part = vim.fn.fnamemodify(relative_path, ':h')
-          if dir_part == '.' then
-            return vim.fn.fnamemodify(git_root, ':t')
-          else
-            return vim.fn.fnamemodify(git_root, ':t') .. '/' .. dir_part
-          end
+          return vim.b.repo_root_rel_dir or ''
         end,
         color = 'Comment',
       },
@@ -56,13 +39,7 @@ require('lualine').setup {
       { 'filename', path = 0, padding = { left = 1, right = 1 } },
       {
         function()
-          local bufname = vim.api.nvim_buf_get_name(0)
-          if bufname == '' then
-            return ''
-          end
-          local relative_path = vim.fn.fnamemodify(bufname, ':~:.')
-          local dir_relative = vim.fn.fnamemodify(relative_path, ':h')
-          return dir_relative
+          return vim.b.repo_root_rel_dir or ''
         end,
         color = { fg = '#576D74', bg = '#002C38', gui = 'italic' },
       },
@@ -85,3 +62,45 @@ require('lualine').setup {
     },
   },
 }
+
+--  Flickering cursor from lualine update, credit: https://www.reddit.com/r/neovim/comments/1gwgl0k/flickering_cursor_from_lualine_update/
+local function update_git_repo_name_async()
+  local bufname = vim.api.nvim_buf_get_name(0)
+  if bufname == '' then
+    vim.b.repo_root_rel_dir = ''
+    return
+  end
+
+  vim.system({ 'git', 'rev-parse', '--show-toplevel' }, {
+    text = true,
+    timeout = 2000,
+  }, function(obj)
+    vim.schedule(function()
+      if obj.code ~= 0 or not obj.stdout or obj.stdout == '' then
+        vim.b.repo_root_rel_dir = ''
+        return
+      end
+
+      local git_root = vim.trim(obj.stdout)
+      local abs_path = vim.fn.fnamemodify(bufname, ':p')
+      local relative_path = abs_path:gsub('^' .. git_root, '')
+      relative_path = relative_path:gsub('^/', '')
+      local dir_part = vim.fn.fnamemodify(relative_path, ':h')
+      local repo_name = vim.fn.fnamemodify(git_root, ':t')
+      local repo_info
+      if dir_part == '.' then
+        repo_info = repo_name
+      else
+        repo_info = repo_name .. '/' .. dir_part
+      end
+
+      vim.b.repo_root_rel_dir = repo_info
+    end)
+  end)
+end
+
+vim.api.nvim_create_autocmd('BufEnter', {
+  callback = function()
+    update_git_repo_name_async()
+  end,
+})
