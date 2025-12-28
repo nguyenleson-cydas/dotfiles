@@ -17,9 +17,20 @@ require('lualine').setup {
           if bufname == '' then
             return ''
           end
-          local relative_path = vim.fn.fnamemodify(bufname, ':~:.')
-          local dir_relative = vim.fn.fnamemodify(relative_path, ':h')
-          return dir_relative
+          local git_root_cmd = 'git rev-parse --show-toplevel 2>/dev/null'
+          local git_root = vim.fn.trim(vim.fn.system(git_root_cmd))
+          if git_root == '' or vim.v.shell_error ~= 0 then
+            return ''
+          end
+          local abs_path = vim.fn.fnamemodify(bufname, ':p')
+          local relative_path = string.gsub(abs_path, '^' .. git_root, '')
+          relative_path = string.gsub(relative_path, '^/', '')
+          local dir_part = vim.fn.fnamemodify(relative_path, ':h')
+          if dir_part == '.' then
+            return vim.fn.fnamemodify(git_root, ':t')
+          else
+            return vim.fn.fnamemodify(git_root, ':t') .. '/' .. dir_part
+          end
         end,
         color = 'Comment',
       },

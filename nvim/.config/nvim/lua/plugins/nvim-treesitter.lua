@@ -27,6 +27,7 @@ require('nvim-treesitter.configs').setup {
     'phpdoc',
     'css',
     'scss',
+    'dockerfile',
   },
   auto_install = true,
   highlight = {
