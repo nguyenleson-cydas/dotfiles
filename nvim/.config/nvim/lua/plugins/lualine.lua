@@ -71,19 +71,44 @@ local function update_git_repo_name_async()
     return
   end
 
+  local abs_path = vim.fn.fnamemodify(bufname, ':p')
+  if abs_path == '' then
+    vim.b.repo_root_rel_dir = ''
+    return
+  end
+
+  -- Normalize paths for comparison (remove trailing slashes)
+  abs_path = abs_path:gsub('/+$', '')
+  local file_dir = vim.fn.fnamemodify(abs_path, ':h')
+  if file_dir == '' then
+    vim.b.repo_root_rel_dir = ''
+    return
+  end
+
+  -- vim.system doesn't throw errors, it returns results via callback
   vim.system({ 'git', 'rev-parse', '--show-toplevel' }, {
     text = true,
     timeout = 2000,
+    cwd = file_dir,
   }, function(obj)
     vim.schedule(function()
-      if obj.code ~= 0 or not obj.stdout or obj.stdout == '' then
+      if not obj or obj.code ~= 0 or not obj.stdout or obj.stdout == '' then
         vim.b.repo_root_rel_dir = ''
         return
       end
 
       local git_root = vim.trim(obj.stdout)
-      local abs_path = vim.fn.fnamemodify(bufname, ':p')
-      local relative_path = abs_path:gsub('^' .. git_root, '')
+      git_root = git_root:gsub('/+$', '')
+
+      -- Escape special characters for pattern matching
+      local escaped_git_root = git_root:gsub('[%^%$%(%)%.%[%]%*%+%-%?]', '%%%0')
+      local relative_path = abs_path:gsub('^' .. escaped_git_root, '')
+
+      -- If file is not in this git repo (shouldn't happen with correct cwd, but check anyway)
+      if relative_path == abs_path then
+        vim.b.repo_root_rel_dir = ''
+        return
+      end
       relative_path = relative_path:gsub('^/', '')
       local dir_part = vim.fn.fnamemodify(relative_path, ':h')
       local repo_name = vim.fn.fnamemodify(git_root, ':t')
@@ -101,6 +126,6 @@ end
 
 vim.api.nvim_create_autocmd('BufEnter', {
   callback = function()
-    update_git_repo_name_async()
+    pcall(update_git_repo_name_async)
   end,
 })
