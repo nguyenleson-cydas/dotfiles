@@ -72,26 +72,19 @@ alias ts='tmux source ~/.config/tmux/tmux.conf'
 alias sz='source ~/.zshrc'
 alias ca='cursor-agent'
 
-# alias phpstan='docker run -v $PWD:/app --rm ghcr.io/phpstan/phpstan'
-
 alias us='ASDF_NODEJS_VERSION=10.15.2 npm --prefix $HOME/dev/intern/uranus/app/vue start'
 alias uw='ASDF_NODEJS_VERSION=10.15.2 npm --prefix $HOME/dev/intern/uranus/app/vue run watch'
 
 # Path
 export PATH="$HOME/.local/share/bob/nvim-bin:${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$HOME/.local/bin:$HOME/bin:$HOME/.composer/vendor/bin:$PATH"
-
-XDG_CONFIG_HOME=$HOME/.config
-STARSHIP_CONFIG=$XDG_CONFIG_HOME/starship/starship.toml
-EDITOR=nvim
-TERM=xterm-256color
+export XDG_CONFIG_HOME=$HOME/.config
+export STARSHIP_CONFIG=$XDG_CONFIG_HOME/starship/starship.toml
+export EDITOR=nvim
 
 # Shell integrations
 source <(fzf --zsh)
 eval "$(zoxide init --cmd j zsh)"
 eval "$(starship init zsh)"
-
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
 
 export PATH="/opt/homebrew/opt/mysql@8.0/bin:$PATH"
 export PATH="/Users/fre_nguyen_s/.config/herd-lite/bin:$PATH"
