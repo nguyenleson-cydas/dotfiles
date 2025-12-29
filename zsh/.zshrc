@@ -63,8 +63,8 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # Aliases
 alias ls='ls --color'
-alias zz='z ..'
-alias zzz='z ../..'
+alias jj='j ..'
+alias jjj='j ../..'
 alias v='nvim'
 alias vz='nvim ~/.zshrc'
 alias c='clear'
