@@ -1,7 +1,34 @@
-# Set the directory we want to store zinit and plugins
+# ============================================================================
+# SYSTEM INITIALIZATION
+# ============================================================================
+# Initialize Homebrew on macOS (Apple Silicon)
+if [[ -f "/opt/homebrew/bin/brew" ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+# ============================================================================
+# ENVIRONMENT VARIABLES
+# ============================================================================
+# XDG Base Directory Specification
+export XDG_CONFIG_HOME=$HOME/.config
+
+# Editor configuration
+export EDITOR=nvim
+
+# Starship prompt configuration
+export STARSHIP_CONFIG=$XDG_CONFIG_HOME/starship/starship.toml
+
+# PATH configuration
+export PATH="$HOME/.local/share/bob/nvim-bin:${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$HOME/.local/bin:$HOME/bin:$HOME/.composer/vendor/bin:$PATH"
+export PATH="/opt/homebrew/opt/mysql@8.0/bin:$PATH"
+
+# ============================================================================
+# ZINIT PLUGIN MANAGER
+# ============================================================================
+# Set the directory for zinit and plugins
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 
-# Download Zinit, if it's not there yet
+# Download Zinit if it doesn't exist
 if [ ! -d "$ZINIT_HOME" ]; then
    mkdir -p "$(dirname $ZINIT_HOME)"
    git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
@@ -10,20 +37,22 @@ fi
 # Source/Load zinit
 source "${ZINIT_HOME}/zinit.zsh"
 
-# Add in zsh plugins
+# ============================================================================
+# ZSH PLUGINS
+# ============================================================================
+# Syntax highlighting and autocompletion plugins
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
 zinit light Aloxaf/fzf-tab
 zinit light jeffreytse/zsh-vi-mode
 
+# Zsh vi mode configuration
 ZVM_SYSTEM_CLIPBOARD_ENABLED=true
 
-# Add in snippets
+# Oh My Zsh snippets
 zinit snippet OMZL::git.zsh
 zinit snippet OMZP::git
-# zinit snippet OMZP::sudo
-zinit snippet OMZP::archlinux
 zinit snippet OMZP::aws
 zinit snippet OMZP::kubectl
 zinit snippet OMZP::kubectx
@@ -33,15 +62,13 @@ zinit snippet OMZP::asdf
 # Load completions
 autoload -Uz compinit && compinit
 
+# Replay zinit cd commands
 zinit cdreplay -q
 
-# Keybindings
-bindkey -e
-bindkey '^p' history-search-backward
-bindkey '^n' history-search-forward
-bindkey '^[w' kill-region
-
-# History
+# ============================================================================
+# ZSH OPTIONS AND SETTINGS
+# ============================================================================
+# History configuration
 HISTSIZE=5000
 HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
@@ -54,6 +81,11 @@ setopt hist_save_no_dups
 setopt hist_ignore_dups
 setopt hist_find_no_dups
 
+# Keybindings
+bindkey '^p' history-search-backward
+bindkey '^n' history-search-forward
+bindkey '^[w' kill-region
+
 # Completion styling
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
@@ -61,35 +93,38 @@ zstyle ':completion:*' menu no
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
-# Aliases
+# ============================================================================
+# ALIASES
+# ============================================================================
+# General aliases
 alias ls='ls --color'
+alias v='nvim'
+alias c='clear'
+
+# Navigation aliases (using zoxide)
 alias jj='j ..'
 alias jjj='j ../..'
-alias v='nvim'
-alias vz='nvim ~/.zshrc'
-alias c='clear'
-alias ts='tmux source ~/.config/tmux/tmux.conf'
-alias sz='source ~/.zshrc'
-alias ca='cursor-agent'
 
+# Project-specific aliases
 alias us='ASDF_NODEJS_VERSION=10.15.2 npm --prefix $HOME/dev/intern/uranus/app/vue start'
 alias uw='ASDF_NODEJS_VERSION=10.15.2 npm --prefix $HOME/dev/intern/uranus/app/vue run watch'
 
-# Path
-export PATH="$HOME/.local/share/bob/nvim-bin:${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$HOME/.local/bin:$HOME/bin:$HOME/.composer/vendor/bin:$PATH"
-export XDG_CONFIG_HOME=$HOME/.config
-export STARSHIP_CONFIG=$XDG_CONFIG_HOME/starship/starship.toml
-export EDITOR=nvim
-
-# Shell integrations
+# ============================================================================
+# SHELL INTEGRATIONS
+# ============================================================================
+# FZF (fuzzy finder) integration
 source <(fzf --zsh)
+
+# Zoxide (smart cd) initialization with 'j' command
 eval "$(zoxide init --cmd j zsh)"
+
+# Starship prompt initialization
 eval "$(starship init zsh)"
 
-export PATH="/opt/homebrew/opt/mysql@8.0/bin:$PATH"
-export PATH="/Users/fre_nguyen_s/.config/herd-lite/bin:$PATH"
-export PHP_INI_SCAN_DIR="/Users/fre_nguyen_s/.config/herd-lite/bin:$PHP_INI_SCAN_DIR"
-
+# ============================================================================
+# APPLICATION-SPECIFIC SETTINGS
+# ============================================================================
+# FZF default options and color scheme
 export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
   --highlight-line \
   --info=inline-right \
