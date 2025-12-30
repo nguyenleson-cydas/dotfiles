@@ -1,4 +1,4 @@
-.PHONY: install uninstall restow install-nvim install-starship install-tmux install-zsh install-lazygit install-ghostty install-scripts help
+.PHONY: install uninstall restow install-nvim install-starship install-tmux install-zsh install-lazygit install-ghostty install-scripts install-eza uninstall-eza help
 
 # Colors for output
 GREEN := \033[0;32m
@@ -6,7 +6,7 @@ YELLOW := \033[0;33m
 NC := \033[0m # No Color
 
 # All packages
-PACKAGES := nvim starship tmux zsh lazygit ghostty scripts
+PACKAGES := nvim starship tmux zsh lazygit ghostty scripts eza
 
 help: ## Show this help message
 	@echo "Usage: make [target]"
@@ -64,6 +64,11 @@ install-scripts: ## Install only scripts
 	@stow scripts
 	@echo "${GREEN}✓ scripts installed${NC}"
 
+install-eza: ## Install only eza config
+	@echo "${GREEN}Installing eza...${NC}"
+	@stow eza
+	@echo "${GREEN}✓ eza installed${NC}"
+
 uninstall-nvim: ## Uninstall neovim config
 	@echo "${YELLOW}Uninstalling nvim...${NC}"
 	@stow -D nvim
@@ -98,6 +103,11 @@ uninstall-scripts: ## Uninstall scripts
 	@echo "${YELLOW}Uninstalling scripts...${NC}"
 	@stow -D scripts
 	@echo "${YELLOW}✓ scripts uninstalled${NC}"
+
+uninstall-eza: ## Uninstall eza config
+	@echo "${YELLOW}Uninstalling eza...${NC}"
+	@stow -D eza
+	@echo "${YELLOW}✓ eza uninstalled${NC}"
 
 check: ## Check for conflicts before installing
 	@echo "${GREEN}Checking for conflicts...${NC}"

@@ -18,6 +18,9 @@ export EDITOR=nvim
 # Starship prompt configuration
 export STARSHIP_CONFIG=$XDG_CONFIG_HOME/starship/starship.toml
 
+# Eza configuration
+export EZA_CONFIG_DIR=$XDG_CONFIG_HOME/eza
+
 # PATH configuration
 export PATH="$HOME/.local/share/bob/nvim-bin:${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$HOME/.local/bin:$HOME/bin:$HOME/.composer/vendor/bin:$PATH"
 export PATH="/opt/homebrew/opt/mysql@8.0/bin:$PATH"
@@ -90,14 +93,14 @@ bindkey '^[w' kill-region
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' menu no
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+zstyle ':fzf-tab:complete:j:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # ============================================================================
 # ALIASES
 # ============================================================================
 # General aliases
-alias ls='ls --color'
+alias ls='eza --icons'
 alias v='nvim'
 alias c='clear'
 
