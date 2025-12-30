@@ -100,7 +100,7 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 # ALIASES
 # ============================================================================
 # General aliases
-alias ls='eza --icons'
+alias ls='eza'
 alias v='nvim'
 alias c='clear'
 
