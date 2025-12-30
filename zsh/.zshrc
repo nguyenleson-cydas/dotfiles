@@ -21,6 +21,46 @@ export STARSHIP_CONFIG=$XDG_CONFIG_HOME/starship/starship.toml
 # Eza configuration
 export EZA_CONFIG_DIR=$XDG_CONFIG_HOME/eza
 
+export EZA_COLORS="\
+*.rs=38;5;41:\
+*.toml=38;5;178:\
+*.json=38;5;178:\
+*.lock=38;5;239:\
+*.md=38;5;184:\
+*.py=38;5;41:\
+*.js=38;5;220:\
+*.ts=38;5;33:\
+*.html=38;5;196:\
+*.css=38;5;33:\
+*.scss=38;5;161:\
+*.go=38;5;37:\
+*.java=38;5;166:\
+*.c=38;5;61:\
+*.cpp=38;5;61:\
+*.h=38;5;246:\
+*.sh=38;5;64:\
+*.zsh=38;5;64:\
+*.fish=38;5;64:\
+*.yml=38;5;178:\
+*.yaml=38;5;178:\
+*.xml=38;5;196:\
+*.zip=38;5;178:\
+*.tar=38;5;178:\
+*.gz=38;5;178:\
+*.bz2=38;5;178:\
+*.xz=38;5;178:\
+*.7z=38;5;178:\
+*.rar=38;5;178:\
+*.jpg=38;5;161:\
+*.jpeg=38;5;161:\
+*.png=38;5;161:\
+*.gif=38;5;161:\
+*.svg=38;5;161:\
+*.mp4=38;5;196:\
+*.mp3=38;5;64:\
+*.wav=38;5;64:\
+*.flac=38;5;37"
+
 # PATH configuration
 export PATH="$HOME/.local/share/bob/nvim-bin:${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$HOME/.local/bin:$HOME/bin:$HOME/.composer/vendor/bin:$PATH"
 export PATH="/opt/homebrew/opt/mysql@8.0/bin:$PATH"
@@ -101,6 +141,7 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 # ============================================================================
 # General aliases
 alias ls='eza'
+alias la='eza -lao'
 alias v='nvim'
 alias c='clear'
 
