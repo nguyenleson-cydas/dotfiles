@@ -1,52 +1,18 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-SEARCH_DIRS=(
-  "$HOME/dev/intern"
-  "$HOME/dev/personal"
-  "$HOME/dev/work"
-  "$HOME/work/projects"
-  "$HOME/learning"
-  "$HOME/notes"
-  "$HOME/.config"
-)
+dirs=$(zoxide query -l)
 
-FZF_PROMPT="Select a directory: "
+[[ -z "$dirs" ]] && { echo "No zoxide entries"; exit 1; }
 
-# Find directories from all search paths
-directories=()
-for dir in "${SEARCH_DIRS[@]}"; do
-  if [[ -d "$dir" ]]; then
-    # List all items in directory and check if they're directories (including symlinks)
-    for item in "$dir"/* "$dir"/.*; do
-      # Skip . and ..
-      [[ "$item" == "$dir/." || "$item" == "$dir/.." ]] && continue
-      # Check if it's a directory (this will be true for both real dirs and symlinks to dirs)
-      if [[ -d "$item" ]]; then
-        directories+=("$item")
-      fi
-    done
-  fi
-done
+selected=$(printf '%s\n' "$dirs" | fzf --tmux center --border=rounded --prompt="Go to: ")
 
-# Exit if no directories found
-if [[ ${#directories[@]} -eq 0 ]]; then
-  echo "No directories found in search paths" >&2
-  exit 1
-fi
-
-selected=$(printf '%s\n' "${directories[@]}" | fzf --tmux center --border rounded --prompt="$FZF_PROMPT")
-
-if [[ -z "$selected" ]]; then
-  exit 0
-fi
+[[ -z "${selected:-}" ]] && exit 0
 
 session_name=$(basename "$selected")
 
-if [[ -z "$TMUX" ]]; then
-  # Outside tmux
+if [[ -z "${TMUX:-}" ]]; then
   tmux new-session -A -s "$session_name" -c "$selected"
 else
-  # Inside tmux
   if tmux has-session -t "$session_name" 2>/dev/null; then
     tmux switch-client -t "$session_name"
   else

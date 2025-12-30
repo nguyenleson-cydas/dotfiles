@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-set -euo pipefail
-parent_session="$(tmux display -p '#S')"
-popup_session="_popup_${parent_session}"
-# Move the active pane from the popup session into a new window on parent
-tmux break-pane -s "${popup_session}:.+" -t "${parent_session}" -d
-# Optional: focus the new window
-tmux last-window -t "${parent_session}"
