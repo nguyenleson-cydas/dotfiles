@@ -50,14 +50,17 @@ local ensure_installed = {
   'dockerfile-language-server',
   --- Note: If the docker-compose-langserver doesn't startup when entering a `docker-compose.yaml` file, make sure that the filetype is `yaml.docker-compose`. You can set with: `:set filetype=yaml.docker-compose`.
   'docker-compose-language-service',
+  'marksman',
 
   -- linting
   'stylua',
   'prettierd',
   'php-cs-fixer',
-  'markdownlint',
+  'markdownlint-cli2',
+  'markdown-toc',
   'sqlfluff',
   'hadolint',
+  'prettier',
 }
 
 vim.lsp.config('lua_ls', lua_ls_config)

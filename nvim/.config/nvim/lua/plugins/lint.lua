@@ -11,7 +11,7 @@ phpstan.args = {
 }
 sqlfluff.args = { 'lint', '--format', 'json', '--dialect', 'mysql', '-' }
 lint.linters_by_ft = {
-  markdown = { 'markdownlint' },
+  markdown = { 'markdownlint-cli2' },
   sql = { 'sqlfluff' },
   php = { 'phpstan' },
 }
