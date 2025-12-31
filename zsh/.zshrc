@@ -142,7 +142,7 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 # General aliases
 alias ls='eza'
 alias la='eza -lao'
-alias v='fd --type f --hidden --exclude .git | fzf --height=40% --border | xargs nvim'
+alias v='nvim'
 alias c='clear'
 
 # Navigation aliases (using zoxide)
