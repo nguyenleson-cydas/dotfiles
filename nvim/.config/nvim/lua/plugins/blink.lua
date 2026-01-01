@@ -18,12 +18,13 @@ require('copilot').setup {
 }
 
 local group = vim.api.nvim_create_augroup('BlinkCmpLazyLoad', { clear = true })
-vim.api.nvim_create_autocmd('InsertEnter', {
+vim.api.nvim_create_autocmd({ 'InsertEnter', 'CmdlineEnter' }, {
   pattern = '*',
   once = true,
   group = group,
   callback = function()
     require('luasnip.loaders.from_vscode').lazy_load()
+    require('luasnip.loaders.from_vscode').lazy_load { paths = { vim.fn.stdpath 'config' .. '/snippets' } }
     require('blink-cmp').setup {
       keymap = {
         preset = 'default',
