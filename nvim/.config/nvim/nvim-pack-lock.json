@@ -34,10 +34,6 @@
       "rev": "bf77caa5da671f5bab16e4792711d5aa288e8db0",
       "src": "https://github.com/lewis6991/gitsigns.nvim.git"
     },
-    "guess-indent.nvim": {
-      "rev": "84a4987ff36798c2fc1169cbaff67960aed9776f",
-      "src": "https://github.com/NMAC427/guess-indent.nvim.git"
-    },
     "lazydev.nvim": {
       "rev": "5231c62aa83c2f8dc8e7ba957aa77098cda1257d",
       "src": "https://github.com/folke/lazydev.nvim.git"
@@ -151,6 +147,10 @@
     "vim-dadbod-ui": {
       "rev": "48c4f271da13d380592f4907e2d1d5558044e4e5",
       "src": "https://github.com/kristijanhusak/vim-dadbod-ui.git"
+    },
+    "vim-sleuth": {
+      "rev": "be69bff86754b1aa5adcbb527d7fcd1635a84080",
+      "src": "https://github.com/tpope/vim-sleuth"
     },
     "vim-tmux-navigator": {
       "rev": "c45243dc1f32ac6bcf6068e5300f3b2b237e576a",
