@@ -1,4 +1,4 @@
-.PHONY: install uninstall restow install-nvim install-starship install-tmux install-zsh install-lazygit install-ghostty install-scripts install-eza uninstall-eza help
+.PHONY: install uninstall restow install-nvim install-starship install-tmux install-zsh install-lazygit install-ghostty install-scripts install-eza install-markdownlint-cli2 uninstall-eza uninstall-markdownlint-cli2 help
 
 # Colors for output
 GREEN := \033[0;32m
@@ -6,7 +6,7 @@ YELLOW := \033[0;33m
 NC := \033[0m # No Color
 
 # All packages
-PACKAGES := nvim starship tmux zsh lazygit ghostty scripts eza
+PACKAGES := nvim starship tmux zsh lazygit ghostty scripts eza markdownlint-cli2
 
 help: ## Show this help message
 	@echo "Usage: make [target]"
@@ -69,6 +69,11 @@ install-eza: ## Install only eza config
 	@stow eza
 	@echo "${GREEN}✓ eza installed${NC}"
 
+install-markdownlint-cli2: ## Install only markdownlint-cli2 config
+	@echo "${GREEN}Installing markdownlint-cli2...${NC}"
+	@stow markdownlint-cli2
+	@echo "${GREEN}✓ markdownlint-cli2 installed${NC}"
+
 uninstall-nvim: ## Uninstall neovim config
 	@echo "${YELLOW}Uninstalling nvim...${NC}"
 	@stow -D nvim
@@ -108,6 +113,11 @@ uninstall-eza: ## Uninstall eza config
 	@echo "${YELLOW}Uninstalling eza...${NC}"
 	@stow -D eza
 	@echo "${YELLOW}✓ eza uninstalled${NC}"
+
+uninstall-markdownlint-cli2: ## Uninstall markdownlint-cli2 config
+	@echo "${YELLOW}Uninstalling markdownlint-cli2...${NC}"
+	@stow -D markdownlint-cli2
+	@echo "${YELLOW}✓ markdownlint-cli2 uninstalled${NC}"
 
 check: ## Check for conflicts before installing
 	@echo "${GREEN}Checking for conflicts...${NC}"
