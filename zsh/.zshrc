@@ -119,7 +119,7 @@ alias uw='ASDF_NODEJS_VERSION=10.15.2 npm --prefix $HOME/dev/intern/uranus/app/v
 # FZF (fuzzy finder) integration
 source <(fzf --zsh)
 
-# Zoxide (smart cd) initialization with 'j' command
+# Zoxide (smart cd)
 eval "$(zoxide init --cmd cd zsh)"
 
 # Starship prompt initialization

@@ -1,4 +1,4 @@
-.PHONY: install uninstall restow install-nvim install-starship install-tmux install-zsh install-lazygit install-ghostty install-scripts install-eza install-markdownlint-cli2 uninstall-eza uninstall-markdownlint-cli2 help
+.PHONY: install uninstall restow install-nvim install-starship install-tmux install-zsh install-fish install-lazygit install-ghostty install-scripts install-eza install-markdownlint-cli2 uninstall-eza uninstall-markdownlint-cli2 uninstall-fish help
 
 # Colors for output
 GREEN := \033[0;32m
@@ -6,7 +6,7 @@ YELLOW := \033[0;33m
 NC := \033[0m # No Color
 
 # All packages
-PACKAGES := nvim starship tmux zsh lazygit ghostty scripts eza markdownlint-cli2
+PACKAGES := nvim starship tmux zsh fish lazygit ghostty scripts eza markdownlint-cli2
 
 help: ## Show this help message
 	@echo "Usage: make [target]"
@@ -48,6 +48,11 @@ install-zsh: ## Install only zsh config
 	@echo "${GREEN}Installing zsh...${NC}"
 	@stow zsh
 	@echo "${GREEN}✓ zsh installed${NC}"
+
+install-fish: ## Install only fish config
+	@echo "${GREEN}Installing fish...${NC}"
+	@stow fish
+	@echo "${GREEN}✓ fish installed${NC}"
 
 install-lazygit: ## Install only lazygit config
 	@echo "${GREEN}Installing lazygit...${NC}"
@@ -93,6 +98,11 @@ uninstall-zsh: ## Uninstall zsh config
 	@echo "${YELLOW}Uninstalling zsh...${NC}"
 	@stow -D zsh
 	@echo "${YELLOW}✓ zsh uninstalled${NC}"
+
+uninstall-fish: ## Uninstall fish config
+	@echo "${YELLOW}Uninstalling fish...${NC}"
+	@stow -D fish
+	@echo "${YELLOW}✓ fish uninstalled${NC}"
 
 uninstall-lazygit: ## Uninstall lazygit config
 	@echo "${YELLOW}Uninstalling lazygit...${NC}"

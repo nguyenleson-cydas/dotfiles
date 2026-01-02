@@ -40,3 +40,7 @@ nvim/.config/nvim/lazyvim.json
 
 # Tmux plugins - managed by TPM (not tracked)
 tmux/.config/tmux/plugins/
+
+# Fish - machine-specific/generated files
+fish/.config/fish/fish_variables
+fish/.config/fish/fish_history
