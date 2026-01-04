@@ -34,6 +34,10 @@
       "rev": "bf77caa5da671f5bab16e4792711d5aa288e8db0",
       "src": "https://github.com/lewis6991/gitsigns.nvim.git"
     },
+    "im-switch.nvim": {
+      "rev": "6d838c69592c50dfab261d306260ae3db5787ee9",
+      "src": "https://github.com/drop-stones/im-switch.nvim"
+    },
     "lazydev.nvim": {
       "rev": "5231c62aa83c2f8dc8e7ba957aa77098cda1257d",
       "src": "https://github.com/folke/lazydev.nvim.git"
