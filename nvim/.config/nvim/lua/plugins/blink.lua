@@ -1,3 +1,12 @@
+local hooks = function(ev)
+  local name, kind = ev.data.spec.name, ev.data.kind
+  if name == 'LuaSnip' and (kind == 'install' or kind == 'update') then
+    vim.system({ 'make', 'install_jsregexp' }, { cwd = ev.data.path })
+  end
+end
+
+vim.api.nvim_create_autocmd('PackChanged', { callback = hooks })
+
 vim.pack.add {
   'https://github.com/zbirenbaum/copilot.lua.git',
   'https://github.com/rafamadriz/friendly-snippets.git',
@@ -84,40 +93,6 @@ vim.api.nvim_create_autocmd({ 'InsertEnter', 'CmdlineEnter' }, {
       snippets = { preset = 'luasnip' },
       fuzzy = { implementation = 'prefer_rust_with_warning' },
     }
-  end,
-})
-
-local function build_luasnip()
-  local data_home = vim.fn.stdpath 'data' -- usually ~/.local/share/nvim
-  local dir = data_home .. '/site/pack/core/opt/LuaSnip'
-
-  if vim.fn.isdirectory(dir) == 0 then
-    vim.notify('LuaSnip directory not found: ' .. dir, vim.log.levels.WARN)
-    return
-  end
-
-  vim.notify('Building LuaSnip (make install_jsregexp)...', vim.log.levels.INFO)
-
-  vim.system({ 'make', 'install_jsregexp' }, { cwd = dir }, function(res)
-    if res.code == 0 then
-      vim.schedule(function()
-        vim.notify('LuaSnip build completed', vim.log.levels.INFO)
-      end)
-    else
-      vim.schedule(function()
-        vim.notify('LuaSnip build failed: ' .. (res.stderr or ''), vim.log.levels.ERROR)
-      end)
-    end
-  end)
-end
-
-vim.api.nvim_create_autocmd('PackChanged', {
-  group = vim.api.nvim_create_augroup('luasnip-build-on-pack-changed', { clear = true }),
-  callback = function(ev)
-    -- adjust this check if the name is different in your setup
-    if ev.data and ev.data.name == 'LuaSnip' and ev.data.kind == 'update' then
-      build_luasnip()
-    end
   end,
 })
 
