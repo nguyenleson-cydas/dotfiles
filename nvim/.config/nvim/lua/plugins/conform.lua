@@ -12,10 +12,10 @@ conform.setup {
   notify_no_formatters = true,
 }
 conform.formatters_by_ft['lua'] = { 'stylua' }
-conform.formatters_by_ft['javascript'] = { 'prettierd', 'prettier', stop_after_first = true }
+conform.formatters_by_ft['javascript'] = { 'prettier' }
 conform.formatters_by_ft['sql'] = { 'sql' }
-conform.formatters_by_ft['vue'] = { 'prettierd', 'prettier', stop_after_first = true }
-conform.formatters_by_ft['json'] = { 'prettierd', 'prettier', stop_after_first = true }
+conform.formatters_by_ft['vue'] = { 'prettier' }
+conform.formatters_by_ft['json'] = { 'prettier' }
 conform.formatters_by_ft['php'] = function(bufnr)
   local filepath = vim.api.nvim_buf_get_name(bufnr)
   for _, project_root in ipairs(projects_using_v2) do
