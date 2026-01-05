@@ -5,17 +5,6 @@ vim.g.have_nerd_font = true
 -- [[ Setting options ]]
 vim.o.number = true
 vim.o.relativenumber = true
--- Dynamic relative number
-vim.api.nvim_create_autocmd('InsertEnter', {
-  callback = function()
-    vim.o.relativenumber = false
-  end,
-})
-vim.api.nvim_create_autocmd('InsertLeave', {
-  callback = function()
-    vim.o.relativenumber = true
-  end,
-})
 vim.o.mouse = 'a'
 vim.o.showmode = false
 vim.schedule(function()

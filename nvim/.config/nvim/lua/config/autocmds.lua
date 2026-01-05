@@ -53,3 +53,16 @@ vim.api.nvim_create_autocmd({ 'WinEnter', 'VimResized', 'WinResized', 'WinNew', 
     vim.wo.statusline = string.rep('─', width)
   end,
 })
+
+
+-- Dynamic relative number
+vim.api.nvim_create_autocmd('InsertEnter', {
+  callback = function()
+    vim.o.relativenumber = false
+  end,
+})
+vim.api.nvim_create_autocmd('InsertLeave', {
+  callback = function()
+    vim.o.relativenumber = true
+  end,
+})
