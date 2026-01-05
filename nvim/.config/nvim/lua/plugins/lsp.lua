@@ -1,13 +1,11 @@
 vim.pack.add {
   'https://github.com/nvim-lua/plenary.nvim.git',
-  'https://github.com/j-hui/fidget.nvim.git',
   'https://github.com/neovim/nvim-lspconfig.git',
   'https://github.com/mason-org/mason.nvim.git',
   'https://github.com/mason-org/mason-lspconfig.nvim.git',
   'https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim.git',
 }
 
-require('fidget').setup {}
 local lua_ls_config = {
   settings = {
     Lua = {
