@@ -8,7 +8,6 @@ end
 vim.api.nvim_create_autocmd('PackChanged', { callback = hooks })
 
 vim.pack.add {
-  'https://github.com/zbirenbaum/copilot.lua.git',
   'https://github.com/rafamadriz/friendly-snippets.git',
   {
     src = 'https://github.com/L3MON4D3/LuaSnip.git',
@@ -18,12 +17,6 @@ vim.pack.add {
     src = 'https://github.com/saghen/blink.cmp.git',
     version = vim.version.range '^1',
   },
-  'https://github.com/giuxtaposition/blink-cmp-copilot.git',
-}
-
-require('copilot').setup {
-  suggestion = { enabled = false },
-  panel = { enabled = false },
 }
 
 local group = vim.api.nvim_create_augroup('BlinkCmpLazyLoad', { clear = true })
@@ -53,11 +46,11 @@ vim.api.nvim_create_autocmd({ 'InsertEnter', 'CmdlineEnter' }, {
           },
         },
         ghost_text = {
-          enabled = true,
+          enabled = false,
         },
       },
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'buffer', 'copilot' },
+        default = { 'lsp', 'path', 'snippets', 'buffer' },
         per_filetype = {
           sql = { 'snippets', 'dadbod', 'buffer' },
           mysql = { 'snippets', 'dadbod', 'buffer' },
@@ -65,12 +58,6 @@ vim.api.nvim_create_autocmd({ 'InsertEnter', 'CmdlineEnter' }, {
         providers = {
           lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
           dadbod = { module = 'vim_dadbod_completion.blink' },
-          copilot = {
-            name = 'copilot',
-            module = 'blink-cmp-copilot',
-            score_offset = 100,
-            async = true,
-          },
         },
       },
       cmdline = {

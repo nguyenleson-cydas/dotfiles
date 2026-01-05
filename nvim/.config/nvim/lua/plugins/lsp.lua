@@ -51,6 +51,7 @@ local ensure_installed = {
   --- Note: If the docker-compose-langserver doesn't startup when entering a `docker-compose.yaml` file, make sure that the filetype is `yaml.docker-compose`. You can set with: `:set filetype=yaml.docker-compose`.
   'docker-compose-language-service',
   'marksman',
+  'copilot-language-server',
 
   -- linting
   'stylua',
@@ -135,3 +136,26 @@ vim.diagnostic.config {
     end,
   },
 }
+
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function()
+    vim.lsp.inline_completion.enable(true)
+
+    vim.keymap.set('i', '<M-CR>', function()
+      vim.lsp.inline_completion.get()
+    end, {
+      desc = 'Accept the current inline completion',
+    })
+    vim.keymap.set('i', '<M-]>', function()
+      vim.lsp.inline_completion.select()
+    end, {
+      desc = 'Show next inline completion',
+    })
+
+    vim.keymap.set('i', '<M-[>', function()
+      vim.lsp.inline_completion.select { counter = -1 }
+    end, {
+      desc = 'Show previous inline completion',
+    })
+  end,
+})
