@@ -26,6 +26,11 @@ local vue_plugin = {
 }
 local vtsls_config = {
   settings = {
+    typescript = {
+      tsserver = {
+        maxTsServerMemory = 12288,
+      },
+    },
     vtsls = {
       tsserver = {
         globalPlugins = {
@@ -53,7 +58,6 @@ local ensure_installed = {
 
   -- linting
   'stylua',
-  'prettierd',
   'php-cs-fixer',
   'markdownlint-cli2',
   'markdown-toc',
