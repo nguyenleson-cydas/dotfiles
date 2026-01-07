@@ -14,37 +14,20 @@ require('mason-nvim-dap').setup {
     'php',
   },
 }
-local dap = require 'dap'
-local dapui = require 'dapui'
-dapui.setup {
-  icons = { expanded = '▾', collapsed = '▸', current_frame = '*' },
-  controls = {
-    icons = {
-      pause = '⏸',
-      play = '▶',
-      step_into = '⏎',
-      step_over = '⏭',
-      step_out = '⏮',
-      step_back = 'b',
-      run_last = '▶▶',
-      terminate = '⏹',
-      disconnect = '⏏',
-    },
-  },
-}
-vim.api.nvim_set_hl(0, 'DapBreak', { fg = '#e51400' })
-vim.api.nvim_set_hl(0, 'DapStop', { fg = '#ffcc00' })
-local breakpoint_icons = vim.g.have_nerd_font
-    and { Breakpoint = '', BreakpointCondition = '', BreakpointRejected = '', LogPoint = '', Stopped = '' }
-  or { Breakpoint = '●', BreakpointCondition = '⊜', BreakpointRejected = '⊘', LogPoint = '◆', Stopped = '⭔' }
-for type, icon in pairs(breakpoint_icons) do
-  local tp = 'Dap' .. type
-  local hl = (type == 'Stopped') and 'DapStop' or 'DapBreak'
-  vim.fn.sign_define(tp, { text = icon, texthl = hl, numhl = hl })
+local dap, dapui = require 'dap', require 'dapui'
+dapui.setup {}
+dap.listeners.before.attach.dapui_config = function()
+  dapui.open()
 end
-dap.listeners.after.event_initialized['dapui_config'] = dapui.open
-dap.listeners.before.event_terminated['dapui_config'] = dapui.close
-dap.listeners.before.event_exited['dapui_config'] = dapui.close
+dap.listeners.before.launch.dapui_config = function()
+  dapui.open()
+end
+dap.listeners.before.event_terminated.dapui_config = function()
+  dapui.close()
+end
+dap.listeners.before.event_exited.dapui_config = function()
+  dapui.close()
+end
 dap.adapters.php = {
   type = 'executable',
   command = 'php-debug-adapter',
@@ -67,25 +50,33 @@ vim.keymap.set('n', '<F5>', function()
   require('dap').continue()
 end, { desc = 'Debug: Start/Continue' })
 
-vim.keymap.set('n', '<F1>', function()
-  require('dap').step_into()
-end, { desc = 'Debug: Step Into' })
+vim.keymap.set('n', '<S-F5>', function()
+  require('dap').terminate()
+end, { desc = 'Debug: Stop' })
 
-vim.keymap.set('n', '<F2>', function()
+vim.keymap.set('n', '<C-S-F5>', function()
+  require('dap').restart()
+end, { desc = 'Debug: Restart' })
+
+vim.keymap.set('n', '<F6>', function()
+  require('dap').pause()
+end, { desc = 'Debug: Pause' })
+
+vim.keymap.set('n', '<F10>', function()
   require('dap').step_over()
 end, { desc = 'Debug: Step Over' })
 
-vim.keymap.set('n', '<F3>', function()
+vim.keymap.set('n', '<F11>', function()
+  require('dap').step_into()
+end, { desc = 'Debug: Step Into' })
+
+vim.keymap.set('n', '<S-F11>', function()
   require('dap').step_out()
 end, { desc = 'Debug: Step Out' })
 
-vim.keymap.set('n', '<leader>b', function()
+vim.keymap.set('n', '<F9>', function()
   require('dap').toggle_breakpoint()
 end, { desc = 'Debug: Toggle Breakpoint' })
-
-vim.keymap.set('n', '<leader>B', function()
-  require('dap').set_breakpoint(vim.fn.input 'Breakpoint condition: ')
-end, { desc = 'Debug: Set Breakpoint' })
 
 vim.keymap.set('n', '<F7>', function()
   require('dapui').toggle()
