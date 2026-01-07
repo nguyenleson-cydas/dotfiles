@@ -6,7 +6,7 @@ vim.pack.add {
   'https://github.com/jay-babu/mason-nvim-dap.nvim.git',
 }
 
-require('nvim-dap-virtual-text').setup {}
+require('nvim-dap-virtual-text').setup { virt_text_pos = 'inline' }
 require('mason-nvim-dap').setup {
   automatic_installation = true,
   handlers = {},
@@ -81,3 +81,7 @@ end, { desc = 'Debug: Toggle Breakpoint' })
 vim.keymap.set('n', '<F7>', function()
   require('dapui').toggle()
 end, { desc = 'Debug: See last session result.' })
+
+vim.keymap.set('n', '<leader>?', function()
+  require('dap').repl.toggle()
+end, { desc = 'Toggle REPL' })
