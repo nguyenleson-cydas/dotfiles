@@ -86,3 +86,11 @@ end, { desc = '[P]ack [C]lean' })
 
 vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Move up half page and center' })
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Move down half page and center' })
+
+vim.api.nvim_create_user_command('DailyNote', function()
+  local date = os.date '%Y-%m-%d'
+  local path = vim.fn.expand '~/notes/daily/' .. date .. '.md'
+  vim.cmd('edit ' .. path)
+end, { desc = 'Open daily note' })
+
+vim.keymap.set('n', '<leader>dn', '<cmd>DailyNote<CR>', { desc = 'Open [D]aily [N]ote' })

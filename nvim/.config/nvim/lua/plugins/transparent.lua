@@ -2,7 +2,7 @@ vim.pack.add { 'https://github.com/xiyaowong/transparent.nvim' }
 require('transparent').setup {
   tranfarency = true,
   exclude_groups = {
-    'CursorLine',
+    -- 'CursorLine',
   },
   extra_groups = {
     'NormalFloat',
