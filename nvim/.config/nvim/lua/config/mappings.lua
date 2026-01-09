@@ -40,10 +40,23 @@ vim.keymap.set('x', 'N', "'nN'[v:searchforward]", { expr = true, desc = 'Prev Se
 vim.keymap.set('o', 'N', "'nN'[v:searchforward]", { expr = true, desc = 'Prev Search Result' })
 
 vim.keymap.set('n', '<leader>yp', function()
-  local path = vim.fn.expand '%'
-  vim.fn.setreg('+', path)
-  vim.notify('Copied relative path: ' .. path, vim.log.levels.INFO)
-end, { desc = '[Y]ank [P]ath (relative)' })
+  local absolute_path = vim.fn.expand '%:p'
+  local relative_path = vim.fn.expand '%'
+
+  -- Try to get git root
+  local git_root = vim.fn.systemlist('git rev-parse --show-toplevel')[1]
+
+  if vim.v.shell_error == 0 and git_root and git_root ~= '' then
+    -- We're in a git repo, get path relative to git root
+    relative_path = vim.fn.fnamemodify(absolute_path, ':s?' .. git_root .. '/??')
+  else
+    -- Fallback to path relative to cwd
+    relative_path = vim.fn.fnamemodify(absolute_path, ':.')
+  end
+
+  vim.fn.setreg('+', relative_path)
+  vim.notify('Copied relative path: ' .. relative_path, vim.log.levels.INFO)
+end, { desc = '[Y]ank [P]ath (relative to git root or cwd)' })
 
 vim.keymap.set('n', '<leader>yP', function()
   local path = vim.fn.expand '%:p'
