@@ -112,10 +112,6 @@
       "src": "https://github.com/nvim-treesitter/nvim-treesitter-textobjects.git",
       "version": "'master'"
     },
-    "nvim-web-devicons": {
-      "rev": "6788013bb9cb784e606ada44206b0e755e4323d7",
-      "src": "https://github.com/nvim-tree/nvim-web-devicons.git"
-    },
     "oil.nvim": {
       "rev": "bbfa7cba85967dc9dbfe0ca486fd4b17084bf846",
       "src": "https://github.com/stevearc/oil.nvim.git"
@@ -135,10 +131,6 @@
     "solarized-osaka.nvim": {
       "rev": "f796014c14b1910e08d42cc2077fef34f08e0295",
       "src": "https://github.com/craftzdog/solarized-osaka.nvim.git"
-    },
-    "todo-comments.nvim": {
-      "rev": "31e3c38ce9b29781e4422fc0322eb0a21f4e8668",
-      "src": "https://github.com/folke/todo-comments.nvim.git"
     },
     "transparent.nvim": {
       "rev": "8ac59883de84e9cd1850ea25cf087031c5ba7d54",

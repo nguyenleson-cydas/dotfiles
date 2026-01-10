@@ -82,12 +82,3 @@ vim.api.nvim_create_autocmd({ 'InsertEnter', 'CmdlineEnter' }, {
     }
   end,
 })
-
-vim.api.nvim_create_autocmd('ColorScheme', {
-  pattern = '*',
-  callback = function()
-    local c = require('solarized-osaka.colors').setup()
-    vim.api.nvim_set_hl(0, 'BlinkCmpMenuBorder', { fg = c.base02, bg = c.none })
-  end,
-})
-

@@ -1,5 +1,4 @@
 vim.pack.add {
-  'https://github.com/nvim-tree/nvim-web-devicons.git',
   'https://github.com/nvim-lualine/lualine.nvim.git',
 }
 
@@ -23,7 +22,7 @@ require('lualine').setup {
         function()
           return '┊  ' .. vim.api.nvim_win_get_number(0)
         end,
-        color = 'DevIconWindows',
+        color = 'MiniIconsBlue',
       },
     },
     lualine_x = {

@@ -43,5 +43,3 @@ vim.cmd [[let &t_Ce = "\e[4:0m"]]
 vim.opt.spell = true
 vim.opt.spelllang = { 'en_us', 'cjk' }
 vim.opt.laststatus = 0
-vim.api.nvim_set_hl(0, 'StatusLine', { link = 'Normal' })
-vim.api.nvim_set_hl(0, 'StatusLineNC', { link = 'Normal' })

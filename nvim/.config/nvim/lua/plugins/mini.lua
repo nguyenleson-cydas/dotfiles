@@ -1,24 +1,36 @@
 vim.pack.add { 'https://github.com/nvim-mini/mini.nvim.git' }
 
+require('mini.basics').setup({
+    -- Manage options in 'plugin/10_options.lua' for didactic purposes
+    options = { basic = false },
+    mappings = {
+      -- Create `<C-hjkl>` mappings for window navigation
+      windows = true,
+      -- Create `<M-hjkl>` mappings for navigation in Insert and Command modes
+      move_with_alt = true,
+    },
+  })
 require('mini.ai').setup { n_lines = 500 }
 require('mini.surround').setup()
 require('mini.icons').setup()
+MiniIcons.mock_nvim_web_devicons()
 require('mini.pairs').setup()
-local hi = require 'mini.hipatterns'
-hi.setup {
+require('mini.extra').setup()
+local hipatterns = require 'mini.hipatterns'
+local hi_words = MiniExtra.gen_highlighter.words
+hipatterns.setup {
   highlighters = {
-    hex_color = hi.gen_highlighter.hex_color { priority = 2000 },
-    shorthand = {
-      pattern = '()#%x%x%x()%f[^%x%w]',
-      group = function(_, _, data)
-        ---@type string
-        local match = data.full_match
-        local r, g, b = match:sub(2, 2), match:sub(3, 3), match:sub(4, 4)
-        local hex_color = '#' .. r .. r .. g .. g .. b .. b
+    -- Highlight a fixed set of common words. Will be highlighted in any place,
+    -- not like "only in comments".
+    fixme = hi_words({ 'FIXME', 'Fixme', 'fixme' }, 'MiniHipatternsFixme'),
+    hack = hi_words({ 'HACK', 'Hack', 'hack' }, 'MiniHipatternsHack'),
+    todo = hi_words({ 'TODO', 'Todo', 'todo' }, 'MiniHipatternsTodo'),
+    note = hi_words({ 'NOTE', 'Note', 'note' }, 'MiniHipatternsNote'),
 
-        return MiniHipatterns.compute_hex_color_group(hex_color, 'bg')
-      end,
-      extmark_opts = { priority = 2000 },
-    },
+    -- Highlight hex color string (#aabbcc) with that color as a background
+    hex_color = hipatterns.gen_highlighter.hex_color(),
   },
 }
+require('mini.misc').setup()
+MiniMisc.setup_restore_cursor()
+require('mini.comment').setup()

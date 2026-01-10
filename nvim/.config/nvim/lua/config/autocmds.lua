@@ -6,28 +6,10 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
--- Highlight on yank
-vim.api.nvim_create_autocmd('TextYankPost', {
-  desc = 'Highlight when yanking (copying) text',
-  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'markdown' },
   callback = function()
-    vim.hl.on_yank()
-  end,
-})
-
--- go to last loc when opening a buffer
-vim.api.nvim_create_autocmd('BufReadPost', {
-  callback = function(args)
-    local mark = vim.api.nvim_buf_get_mark(args.buf, '"')
-    local line_count = vim.api.nvim_buf_line_count(args.buf)
-    if mark[1] > 0 and mark[1] <= line_count then
-      if mark[1] > 1 then
-        vim.api.nvim_win_set_cursor(0, mark)
-        vim.schedule(function()
-          vim.cmd 'normal! zz'
-        end)
-      end
-    end
+    vim.opt_local.wrap = false
   end,
 })
 
@@ -84,5 +66,23 @@ vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
     end
     local file = vim.uv.fs_realpath(event.match) or event.match
     vim.fn.mkdir(vim.fn.fnamemodify(file, ':p:h'), 'p')
+  end,
+})
+
+-- Create an autocmd group specifically for managing custom highlights
+vim.api.nvim_create_augroup('CustomHighlights', { clear = true })
+
+-- Create an autocmd that runs on both VimEnter and ColorScheme events
+vim.api.nvim_create_autocmd({ 'VimEnter', 'ColorScheme' }, {
+  group = 'CustomHighlights',
+  pattern = '*', -- Apply to all color schemes
+  callback = function()
+    vim.api.nvim_set_hl(0, 'FloatBorder', { fg = '#268BD2' })
+    vim.api.nvim_set_hl(0, 'WhichkeyBorder', { link = 'FloatBorder' })
+    vim.api.nvim_set_hl(0, 'SnacksPickerBorder', { link = 'FloatBorder' })
+    vim.api.nvim_set_hl(0, 'BlinkCmpMenuBorder', { link = 'FloatBorder' })
+    vim.api.nvim_set_hl(0, 'BlinkCmpDocBorder', { link = 'FloatBorder' })
+    vim.api.nvim_set_hl(0, 'StatusLine', { link = 'Normal' })
+    vim.api.nvim_set_hl(0, 'StatusLineNC', { link = 'Normal' })
   end,
 })
