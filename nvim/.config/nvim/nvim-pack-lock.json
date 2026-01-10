@@ -5,10 +5,6 @@
       "src": "https://github.com/L3MON4D3/LuaSnip.git",
       "version": "2.0.0 - 3.0.0"
     },
-    "blink-cmp-copilot": {
-      "rev": "439cff78780c033aa23cf061d7315314b347e3c1",
-      "src": "https://github.com/giuxtaposition/blink-cmp-copilot.git"
-    },
     "blink.cmp": {
       "rev": "b19413d214068f316c78978b08264ed1c41830ec",
       "src": "https://github.com/saghen/blink.cmp.git",
@@ -17,10 +13,6 @@
     "conform.nvim": {
       "rev": "5420c4b5ea0aeb99c09cfbd4fd0b70d257b44f25",
       "src": "https://github.com/stevearc/conform.nvim.git"
-    },
-    "copilot.lua": {
-      "rev": "e78d1ffebdf6ccb6fd8be4e6898030c1cf5f9b64",
-      "src": "https://github.com/zbirenbaum/copilot.lua.git"
     },
     "friendly-snippets": {
       "rev": "572f5660cf05f8cd8834e096d7b4c921ba18e175",
