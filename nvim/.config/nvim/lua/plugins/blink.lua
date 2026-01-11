@@ -1,7 +1,13 @@
 local hooks = function(ev)
   local name, kind = ev.data.spec.name, ev.data.kind
   if name == 'LuaSnip' and (kind == 'install' or kind == 'update') then
-    vim.system({ 'make', 'install_jsregexp' }, { cwd = ev.data.path })
+    vim.notify('Building LuaSnip jsregexp...', vim.log.levels.INFO)
+    local obj = vim.system({ 'make', 'install_jsregexp' }, { cwd = ev.data.path }):wait()
+    if obj.code == 0 then
+      vim.notify('LuaSnip jsregexp built successfully.', vim.log.levels.INFO)
+    else
+      vim.notify('Error building LuaSnip jsregexp.', vim.log.levels.ERROR)
+    end
   end
 end
 
@@ -28,29 +34,7 @@ vim.api.nvim_create_autocmd({ 'InsertEnter', 'CmdlineEnter' }, {
     require('luasnip.loaders.from_vscode').lazy_load()
     require('luasnip.loaders.from_vscode').lazy_load { paths = { vim.fn.stdpath 'config' .. '/snippets' } }
     require('blink-cmp').setup {
-      keymap = {
-        preset = 'default',
-      },
-      appearance = {
-        nerd_font_variant = 'mono',
-        use_nvim_cmp_as_default = false,
-      },
-      completion = {
-        documentation = {
-          auto_show = true,
-          auto_show_delay_ms = 200,
-        },
-        menu = {
-          draw = {
-            treesitter = { 'lsp' },
-          },
-        },
-        ghost_text = {
-          enabled = false,
-        },
-      },
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'buffer' },
         per_filetype = {
           sql = { 'snippets', 'dadbod', 'buffer' },
           mysql = { 'snippets', 'dadbod', 'buffer' },
@@ -60,25 +44,7 @@ vim.api.nvim_create_autocmd({ 'InsertEnter', 'CmdlineEnter' }, {
           dadbod = { module = 'vim_dadbod_completion.blink' },
         },
       },
-      cmdline = {
-        enabled = true,
-        keymap = {
-          preset = 'cmdline',
-          ['<Right>'] = false,
-          ['<Left>'] = false,
-        },
-        completion = {
-          list = { selection = { preselect = false } },
-          menu = {
-            auto_show = function(ctx)
-              return vim.fn.getcmdtype() == ':'
-            end,
-          },
-          ghost_text = { enabled = true },
-        },
-      },
       snippets = { preset = 'luasnip' },
-      fuzzy = { implementation = 'prefer_rust_with_warning' },
     }
   end,
 })

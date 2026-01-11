@@ -4,7 +4,13 @@ local hooks = function(ev)
     if not ev.data.active then
       vim.cmd.packadd 'nvim-treesitter'
     end
+    vim.notify('Updating Treesitter parsers...', vim.log.levels.INFO)
     vim.cmd 'TSUpdate'
+    if vim.v.shell_error == 0 then
+      vim.notify('Treesitter parsers updated successfully.', vim.log.levels.INFO)
+    else
+      vim.notify('Error updating Treesitter parsers.', vim.log.levels.ERROR)
+    end
   end
 end
 
@@ -25,7 +31,7 @@ require('nvim-treesitter').setup {
   install_dir = vim.fn.stdpath 'data' .. '/site',
 }
 
-require'nvim-treesitter'.install { 'php', 'javascript', 'typescript', 'vue', 'css', 'scss', 'html', 'json' }
+require('nvim-treesitter').install { 'php', 'javascript', 'typescript', 'vue', 'css', 'scss', 'html', 'json' }
 
 vim.api.nvim_create_autocmd('FileType', {
   callback = function(args)
