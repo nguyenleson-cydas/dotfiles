@@ -16,16 +16,7 @@ end
 
 vim.api.nvim_create_autocmd('PackChanged', { callback = hooks })
 
-vim.pack.add {
-  {
-    src = 'https://github.com/nvim-treesitter/nvim-treesitter',
-    version = 'main',
-  },
-  {
-    src = 'https://github.com/nvim-treesitter/nvim-treesitter-textobjects',
-    version = 'main',
-  },
-}
+vim.pack.add { 'https://github.com/nvim-treesitter/nvim-treesitter' }
 
 require('nvim-treesitter').setup {
   install_dir = vim.fn.stdpath 'data' .. '/site',
