@@ -58,11 +58,16 @@ vim.api.nvim_create_autocmd({ 'VimEnter', 'ColorScheme' }, {
   group = 'CustomHighlights',
   pattern = '*', -- Apply to all color schemes
   callback = function()
-    vim.api.nvim_set_hl(0, 'FloatBorder', { fg = '#268BD2' })
-    vim.api.nvim_set_hl(0, 'WhichkeyBorder', { link = 'FloatBorder' })
-    vim.api.nvim_set_hl(0, 'SnacksPickerBorder', { link = 'FloatBorder' })
-    vim.api.nvim_set_hl(0, 'BlinkCmpMenuBorder', { link = 'FloatBorder' })
-    vim.api.nvim_set_hl(0, 'BlinkCmpDocBorder', { link = 'FloatBorder' })
+    -- Floating windows
+    vim.api.nvim_set_hl(0, 'FloatBorder', { fg = '#586E75' })
+    vim.api.nvim_set_hl(0, 'cursorline', { bg = '#073642' })
+    vim.api.nvim_set_hl(0, 'cursorlinenr', { fg = '#2aa198', bold = true })
+    vim.api.nvim_set_hl(0, 'visual', { bg = '#103956' })
+    vim.api.nvim_set_hl(0, 'whichkeyborder', { link = 'floatborder' })
+    vim.api.nvim_set_hl(0, 'snackspickerborder', { link = 'floatborder' })
+    vim.api.nvim_set_hl(0, 'blinkcmpmenuborder', { link = 'floatborder' })
+    vim.api.nvim_set_hl(0, 'blinkcmpdocborder', { link = 'floatborder' })
+    vim.api.nvim_set_hl(0, 'blinkcmpmenuselection', { link = 'CursorLine' })
     vim.api.nvim_set_hl(0, 'StatusLine', { link = 'Normal' })
     vim.api.nvim_set_hl(0, 'StatusLineNC', { link = 'Normal' })
   end,

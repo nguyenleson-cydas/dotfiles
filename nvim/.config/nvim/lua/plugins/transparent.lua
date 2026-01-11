@@ -2,6 +2,7 @@ vim.pack.add { 'https://github.com/xiyaowong/transparent.nvim' }
 require('transparent').setup {
   exclude_groups = {
     'CursorLine',
+    'blinkcmpmenuselection',
   },
   extra_groups = {
     'NormalFloat',
