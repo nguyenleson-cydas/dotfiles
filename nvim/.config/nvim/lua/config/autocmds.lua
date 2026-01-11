@@ -6,13 +6,6 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = { 'markdown' },
-  callback = function()
-    vim.opt_local.wrap = false
-  end,
-})
-
 -- resize splits if window got resized
 vim.api.nvim_create_autocmd({ 'VimResized' }, {
   group = vim.api.nvim_create_augroup('resize_splits', { clear = true }),
@@ -42,18 +35,6 @@ vim.api.nvim_create_autocmd({ 'WinEnter', 'VimResized', 'WinResized', 'WinNew', 
   callback = function()
     local width = vim.api.nvim_win_get_width(0)
     vim.o.statusline = string.rep('─', width)
-  end,
-})
-
--- Dynamic relative number
-vim.api.nvim_create_autocmd('InsertEnter', {
-  callback = function()
-    vim.o.relativenumber = false
-  end,
-})
-vim.api.nvim_create_autocmd('InsertLeave', {
-  callback = function()
-    vim.o.relativenumber = true
   end,
 })
 

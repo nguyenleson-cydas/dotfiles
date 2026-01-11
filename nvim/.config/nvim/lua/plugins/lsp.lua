@@ -101,29 +101,19 @@ end, { desc = 'LSP Symbols' })
 vim.keymap.set('n', '<leader>sS', function()
   Snacks.picker.lsp_workspace_symbols()
 end, { desc = 'LSP Workspace Symbols' })
-vim.keymap.set('n', 'K', function()
-  vim.lsp.buf.hover {
-    focus = true,
-    focusable = true,
-    wrap = true,
-    wrap_at = 100,
-    max_width = 100,
-    border = 'rounded',
-  }
-end)
 
 vim.diagnostic.config {
   severity_sort = true,
   float = { border = 'rounded', source = 'if_many' },
   underline = { severity = vim.diagnostic.severity.ERROR },
-  signs = vim.g.have_nerd_font and {
+  signs = {
     text = {
       [vim.diagnostic.severity.ERROR] = '󰅚 ',
       [vim.diagnostic.severity.WARN] = '󰀪 ',
       [vim.diagnostic.severity.INFO] = '󰋽 ',
       [vim.diagnostic.severity.HINT] = '󰌶 ',
     },
-  } or {},
+  },
   virtual_text = {
     source = 'if_many',
     spacing = 2,
@@ -141,15 +131,17 @@ vim.diagnostic.config {
 
 vim.api.nvim_create_autocmd('LspAttach', {
   callback = function()
-    vim.lsp.inline_completion.enable(true)
+    vim.schedule(function()
+      vim.lsp.inline_completion.enable()
+    end)
 
-    vim.keymap.set('i', '<M-CR>', function()
+    vim.keymap.set({ 'i', 'n' }, '<M-CR>', function()
       vim.lsp.inline_completion.get()
     end, {
       desc = 'Accept the current inline completion',
     })
-    vim.keymap.set('i', '<M-]>', function()
-      vim.lsp.inline_completion.select()
+    vim.keymap.set({ 'i', 'n' }, '<M-]>', function()
+      vim.lsp.inline_completion.select { counter = 1 }
     end, {
       desc = 'Show next inline completion',
     })

@@ -5,7 +5,6 @@ local hooks = function(ev)
       vim.cmd.packadd 'nvim-treesitter'
     end
     vim.cmd 'TSUpdate'
-    require('nvim-treesitter').after_update()
   end
 end
 
@@ -28,7 +27,7 @@ require('nvim-treesitter').setup {
 
 require'nvim-treesitter'.install { 'php', 'javascript', 'typescript', 'vue', 'css', 'scss', 'html', 'json' }
 
-vim.api.nvim_create_autocmd('FileType', { -- enable treesitter highlighting and indents
+vim.api.nvim_create_autocmd('FileType', {
   callback = function(args)
     local filetype = args.match
     local lang = vim.treesitter.language.get_lang(filetype)
