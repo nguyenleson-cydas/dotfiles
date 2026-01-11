@@ -33,4 +33,3 @@ hipatterns.setup {
 }
 require('mini.misc').setup()
 MiniMisc.setup_restore_cursor()
-require('mini.comment').setup()
