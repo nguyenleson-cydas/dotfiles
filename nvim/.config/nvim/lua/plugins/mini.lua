@@ -1,14 +1,5 @@
 vim.pack.add { 'https://github.com/nvim-mini/mini.nvim.git' }
 
-require('mini.basics').setup {
- options = {
-    basic = false,
-    extra_ui = true,
-  },
-  mappings = {
-    option_toggle_prefix = '',
-  },
-}
 require('mini.ai').setup { n_lines = 500 }
 require('mini.surround').setup()
 require('mini.icons').setup()

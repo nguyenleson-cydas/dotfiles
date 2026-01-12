@@ -50,12 +50,9 @@ vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
   end,
 })
 
--- Create an autocmd group specifically for managing custom highlights
-vim.api.nvim_create_augroup('CustomHighlights', { clear = true })
-
 -- Create an autocmd that runs on both VimEnter and ColorScheme events
-vim.api.nvim_create_autocmd({ 'VimEnter', 'ColorScheme' }, {
-  group = 'CustomHighlights',
+vim.api.nvim_create_autocmd('ColorScheme', {
+  group = vim.api.nvim_create_augroup('CustomHighlights', { clear = true }),
   pattern = '*', -- Apply to all color schemes
   callback = function()
     -- Floating windows
@@ -71,4 +68,14 @@ vim.api.nvim_create_autocmd({ 'VimEnter', 'ColorScheme' }, {
     vim.api.nvim_set_hl(0, 'StatusLine', { link = 'Normal' })
     vim.api.nvim_set_hl(0, 'StatusLineNC', { link = 'Normal' })
   end,
+})
+
+-- Highlight on yank
+vim.api.nvim_create_autocmd('TextYankPost', {
+  pattern = '*',
+  group = vim.api.nvim_create_augroup('HighlightOnYank', { clear = true }),
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+  desc = 'Highlight yanked text',
 })
