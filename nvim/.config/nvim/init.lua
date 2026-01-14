@@ -4,8 +4,8 @@ require 'config.mappings'
 require 'config.autocmds'
 
 -- my plugins
-require 'sonix.cowboy'
-require 'sonix.sql-runner'
+-- require 'sonix.cowboy'
+-- require 'sonix.sql-runner'
 
 -- plugins
 require 'plugins.gitsigns'
