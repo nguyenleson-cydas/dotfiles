@@ -4,11 +4,7 @@ vim.pack.add {
 
 local function update_git_repo_name()
   local absolute_path = vim.fn.expand '%:p'
-  local relative_path = vim.fn.expand '%'
-
-  -- Try to get git root
   local git_root = vim.fn.systemlist('git rev-parse --show-toplevel')[1]
-
   if vim.v.shell_error == 0 and git_root and git_root ~= '' then
     -- We're in a git repo, get path relative to git root
     vim.b.git_repo_name = vim.fn.fnamemodify(absolute_path, ':s?' .. git_root .. '/??')

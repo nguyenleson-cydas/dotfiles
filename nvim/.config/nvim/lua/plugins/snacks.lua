@@ -19,8 +19,6 @@ require('snacks').setup {
     },
   },
 }
-
--- Top Pickers & Explorer
 vim.keymap.set('n', '<leader><space>', function()
   Snacks.picker.smart()
 end, { desc = 'Smart Find Files' })
@@ -30,137 +28,27 @@ end, { desc = 'Buffers' })
 vim.keymap.set('n', '<leader>/', function()
   Snacks.picker.grep()
 end, { desc = 'Grep' })
-vim.keymap.set('n', '<leader>:', function()
-  Snacks.picker.command_history()
-end, { desc = 'Command History' })
 vim.keymap.set('n', '<leader>n', function()
   Snacks.picker.notifications()
 end, { desc = 'Notification History' })
-vim.keymap.set('n', '<leader>e', function()
-  Snacks.explorer()
-end, { desc = 'File Explorer' })
-
--- find
 vim.keymap.set('n', '<leader>fb', function()
   Snacks.picker.buffers()
 end, { desc = 'Buffers' })
-vim.keymap.set('n', '<leader>fc', function()
-  Snacks.picker.files { cwd = vim.fn.stdpath 'config' }
-end, { desc = 'Find Config File' })
 vim.keymap.set('n', '<leader>ff', function()
   Snacks.picker.files()
 end, { desc = 'Find Files' })
 vim.keymap.set('n', '<leader>fg', function()
   Snacks.picker.git_files()
 end, { desc = 'Find Git Files' })
-vim.keymap.set('n', '<leader>fp', function()
-  Snacks.picker.projects()
-end, { desc = 'Projects' })
 vim.keymap.set('n', '<leader>fr', function()
   Snacks.picker.recent()
 end, { desc = 'Recent' })
-
--- Grep
-vim.keymap.set('n', '<leader>sb', function()
-  Snacks.picker.lines()
-end, { desc = 'Buffer Lines' })
-vim.keymap.set('n', '<leader>sB', function()
-  Snacks.picker.grep_buffers()
-end, { desc = 'Grep Open Buffers' })
 vim.keymap.set('n', '<leader>sg', function()
   Snacks.picker.grep()
 end, { desc = 'Grep' })
-vim.keymap.set({ 'n', 'x' }, '<leader>sw', function()
-  Snacks.picker.grep_word()
-end, { desc = 'Visual selection or word' })
-
--- search
-vim.keymap.set('n', '<leader>s"', function()
-  Snacks.picker.registers()
-end, { desc = 'Registers' })
-vim.keymap.set('n', '<leader>s/', function()
-  Snacks.picker.search_history()
-end, { desc = 'Search History' })
-vim.keymap.set('n', '<leader>sa', function()
-  Snacks.picker.autocmds()
-end, { desc = 'Autocmds' })
-vim.keymap.set('n', '<leader>sb', function()
-  Snacks.picker.lines()
-end, { desc = 'Buffer Lines' })
-vim.keymap.set('n', '<leader>sc', function()
-  Snacks.picker.command_history()
-end, { desc = 'Command History' })
-vim.keymap.set('n', '<leader>sC', function()
-  Snacks.picker.commands()
-end, { desc = 'Commands' })
-vim.keymap.set('n', '<leader>sd', function()
-  Snacks.picker.diagnostics()
-end, { desc = 'Diagnostics' })
-vim.keymap.set('n', '<leader>sD', function()
-  Snacks.picker.diagnostics_buffer()
-end, { desc = 'Buffer Diagnostics' })
-vim.keymap.set('n', '<leader>sh', function()
-  Snacks.picker.help()
-end, { desc = 'Help Pages' })
-vim.keymap.set('n', '<leader>sH', function()
-  Snacks.picker.highlights()
-end, { desc = 'Highlights' })
-vim.keymap.set('n', '<leader>si', function()
-  Snacks.picker.icons()
-end, { desc = 'Icons' })
-vim.keymap.set('n', '<leader>sj', function()
-  Snacks.picker.jumps()
-end, { desc = 'Jumps' })
-vim.keymap.set('n', '<leader>sk', function()
-  Snacks.picker.keymaps()
-end, { desc = 'Keymaps' })
-vim.keymap.set('n', '<leader>sl', function()
-  Snacks.picker.loclist()
-end, { desc = 'Location List' })
-vim.keymap.set('n', '<leader>sm', function()
-  Snacks.picker.marks()
-end, { desc = 'Marks' })
-vim.keymap.set('n', '<leader>sM', function()
-  Snacks.picker.man()
-end, { desc = 'Man Pages' })
-vim.keymap.set('n', '<leader>sp', function()
-  Snacks.picker.lazy()
-end, { desc = 'Search for Plugin Spec' })
-vim.keymap.set('n', '<leader>sq', function()
-  Snacks.picker.qflist()
-end, { desc = 'Quickfix List' })
-vim.keymap.set('n', '<leader>sR', function()
-  Snacks.picker.resume()
-end, { desc = 'Resume' })
-vim.keymap.set('n', '<leader>su', function()
-  Snacks.picker.undo()
-end, { desc = 'Undo History' })
-vim.keymap.set('n', '<leader>uC', function()
-  Snacks.picker.colorschemes()
-end, { desc = 'Colorschemes' })
-
--- Other
-vim.keymap.set('n', '<leader>z', function()
-  Snacks.zen()
-end, { desc = 'Toggle Zen Mode' })
-vim.keymap.set('n', '<leader>Z', function()
-  Snacks.zen.zoom()
-end, { desc = 'Toggle Zoom' })
-vim.keymap.set('n', '<leader>.', function()
-  Snacks.scratch()
-end, { desc = 'Toggle Scratch Buffer' })
-vim.keymap.set('n', '<leader>S', function()
-  Snacks.scratch.select()
-end, { desc = 'Select Scratch Buffer' })
 vim.keymap.set('n', '<leader>n', function()
   Snacks.notifier.show_history()
 end, { desc = 'Notification History' })
-vim.keymap.set('n', '<leader>bd', function()
-  Snacks.bufdelete()
-end, { desc = 'Delete Buffer' })
-vim.keymap.set('n', '<leader>cR', function()
-  Snacks.rename.rename_file()
-end, { desc = 'Rename File' })
 vim.keymap.set({ 'n', 'v' }, '<leader>gB', function()
   Snacks.gitbrowse()
 end, { desc = 'Git Browse' })
@@ -170,37 +58,6 @@ end, { desc = 'Dismiss All Notifications' })
 vim.keymap.set({ 'n', 't' }, '<c-/>', function()
   Snacks.terminal()
 end, { desc = 'Toggle Terminal' })
-vim.keymap.set({ 'n', 't' }, '<c-_>', function()
-  Snacks.terminal()
-end, { desc = 'which_key_ignore' })
-
--- GitHub Issues / PRs via snacks.gh picker
-vim.keymap.set('n', '<leader>gi', function()
-  Snacks.picker.gh_issue()
-end, { desc = 'GitHub Issues (open)' })
-
-vim.keymap.set('n', '<leader>gI', function()
-  Snacks.picker.gh_issue { state = 'all' }
-end, { desc = 'GitHub Issues (all)' })
-
-vim.keymap.set('n', '<leader>gp', function()
-  Snacks.picker.gh_pr()
-end, { desc = 'GitHub Pull Requests (open)' })
-
-vim.keymap.set('n', '<leader>gP', function()
-  Snacks.picker.gh_pr { state = 'all' }
-end, { desc = 'GitHub Pull Requests (all)' })
-
--- Toggle
--- Create some toggle mappings
-Snacks.toggle.option('spell', { name = 'Spelling' }):map '<leader>us'
 Snacks.toggle.option('wrap', { name = 'Wrap' }):map '<leader>uw'
-Snacks.toggle.option('relativenumber', { name = 'Relative Number' }):map '<leader>uL'
-Snacks.toggle.diagnostics():map '<leader>ud'
-Snacks.toggle.line_number():map '<leader>ul'
-Snacks.toggle.option('conceallevel', { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 }):map '<leader>uc'
-Snacks.toggle.treesitter():map '<leader>uT'
-Snacks.toggle.option('background', { off = 'light', on = 'dark', name = 'Dark Background' }):map '<leader>ub'
+Snacks.toggle.option('relativenumber', { name = 'Relative Number' }):map '<leader>ul'
 Snacks.toggle.inlay_hints():map '<leader>uh'
-Snacks.toggle.indent():map '<leader>ug'
-Snacks.toggle.dim():map '<leader>uD'
