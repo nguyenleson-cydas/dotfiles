@@ -34,7 +34,7 @@ vim.api.nvim_create_autocmd({ 'WinLeave', 'BufLeave' }, {
 vim.api.nvim_create_autocmd({ 'WinEnter', 'VimResized', 'WinResized', 'WinNew', 'BufWinEnter' }, {
   callback = function()
     local width = vim.api.nvim_win_get_width(0)
-    vim.o.statusline = string.rep('─', width)
+    vim.o.statusline = string.rep('−', width)
   end,
 })
 
@@ -55,11 +55,10 @@ vim.api.nvim_create_autocmd('ColorScheme', {
   group = vim.api.nvim_create_augroup('CustomHighlights', { clear = true }),
   pattern = '*', -- Apply to all color schemes
   callback = function()
-    -- Floating windows
     vim.api.nvim_set_hl(0, 'FloatBorder', { fg = '#586E75' })
-    vim.api.nvim_set_hl(0, 'cursorline', { bg = '#073642' })
-    vim.api.nvim_set_hl(0, 'cursorlinenr', { fg = '#2aa198', bold = true })
-    vim.api.nvim_set_hl(0, 'visual', { bg = '#103956' })
+    vim.api.nvim_set_hl(0, 'cursorline', { bg = '#103956' })
+    vim.api.nvim_set_hl(0, 'cursorlinenr', { fg = '#B58900', bold = true })
+    vim.api.nvim_set_hl(0, 'visual', { bg = '#1B6497' })
     vim.api.nvim_set_hl(0, 'whichkeyborder', { link = 'floatborder' })
     vim.api.nvim_set_hl(0, 'snackspickerborder', { link = 'floatborder' })
     vim.api.nvim_set_hl(0, 'blinkcmpmenuborder', { link = 'floatborder' })
