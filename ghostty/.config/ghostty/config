@@ -1,7 +1,7 @@
 # cmd+shift+, to reload the config
 theme = solarized_osaka_dark
-background-opacity = 0.8
-background-blur-radius = 20
+background-opacity = 0.9
+background-blur-radius = 0
 minimum-contrast=1.1
 font-family = "PlemolJP Console NF"
 font-style = "Medium"
