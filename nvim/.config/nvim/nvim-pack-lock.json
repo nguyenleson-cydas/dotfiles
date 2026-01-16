@@ -10,6 +10,10 @@
       "src": "https://github.com/saghen/blink.cmp.git",
       "version": "1.0.0 - 2.0.0"
     },
+    "checkmate.nvim": {
+      "rev": "fc8edd6ecf8e4095ef878780e4bed83cc5c56c14",
+      "src": "https://github.com/bngarren/checkmate.nvim"
+    },
     "conform.nvim": {
       "rev": "238f542a118984a88124fc915d5b981680418707",
       "src": "https://github.com/stevearc/conform.nvim.git"

@@ -115,7 +115,8 @@ end, { desc = 'Open daily note' })
 
 vim.keymap.set('n', '<leader>dn', '<cmd>DailyNote<CR>', { desc = 'Open [D]aily [N]ote' })
 
-local todo_path = vim.fn.expand("~/notes/todo.md")
+local date = os.date '%Y-%m-%d'
+local daily_note_path = vim.fn.expand '~/notes/daily/' .. date .. '.md'
 
 local state = {
   buf = nil,
@@ -127,13 +128,13 @@ local function create_floating_win(buf)
   local height = math.floor(vim.o.lines / 3)
 
   local config = {
-    relative = "editor",
+    relative = 'editor',
     width = width,
     height = height,
     row = 1,
     col = math.floor(vim.o.columns - width),
-    style = "minimal",
-    border = "rounded",
+    style = 'minimal',
+    border = 'rounded',
   }
 
   local win = vim.api.nvim_open_win(buf, false, config)
@@ -147,13 +148,13 @@ local function ensure_todo_buf()
   end
 
   local buf = vim.api.nvim_create_buf(true, false)
-  vim.api.nvim_buf_set_name(buf, todo_path)
+  vim.api.nvim_buf_set_name(buf, daily_note_path)
 
   vim.api.nvim_buf_call(buf, function()
-    vim.cmd("silent! edit " .. vim.fn.fnameescape(todo_path))
+    vim.cmd('silent! edit ' .. vim.fn.fnameescape(daily_note_path))
   end)
 
-  vim.bo[buf].bufhidden = "hide"
+  vim.bo[buf].bufhidden = 'hide'
   vim.bo[buf].swapfile = false
 
   state.buf = buf
@@ -173,4 +174,4 @@ local function toggle_todo()
   state.win = create_floating_win(buf)
 end
 
-vim.keymap.set("n", "<leader>td", toggle_todo, { desc = "Toggle todo (no focus)" })
+vim.keymap.set('n', '<leader>td', toggle_todo, { desc = 'Toggle todo (no focus)' })
