@@ -107,14 +107,6 @@ end, { desc = '[P]ack [C]lean' })
 vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Move up half page and center' })
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Move down half page and center' })
 
-vim.api.nvim_create_user_command('DailyNote', function()
-  local date = os.date '%Y-%m-%d'
-  local path = vim.fn.expand '~/notes/daily/' .. date .. '.md'
-  vim.cmd('edit ' .. path)
-end, { desc = 'Open daily note' })
-
-vim.keymap.set('n', '<leader>dn', '<cmd>DailyNote<CR>', { desc = 'Open [D]aily [N]ote' })
-
 local date = os.date '%Y-%m-%d'
 local daily_note_path = vim.fn.expand '~/notes/daily/' .. date .. '.md'
 
@@ -161,7 +153,7 @@ local function ensure_todo_buf()
   return buf
 end
 
-local function toggle_todo()
+local function toggle_daily_note()
   -- If window exists → hide it
   if state.win and vim.api.nvim_win_is_valid(state.win) then
     vim.api.nvim_win_hide(state.win)
@@ -174,4 +166,4 @@ local function toggle_todo()
   state.win = create_floating_win(buf)
 end
 
-vim.keymap.set('n', '<leader>td', toggle_todo, { desc = 'Toggle todo (no focus)' })
+vim.keymap.set('n', '<leader>dn', toggle_daily_note, { desc = 'Toggle [D]aily [N]ote (no focus)' })
