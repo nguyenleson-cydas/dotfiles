@@ -34,7 +34,7 @@ vim.api.nvim_create_autocmd({ 'WinLeave', 'BufLeave' }, {
 vim.api.nvim_create_autocmd({ 'WinEnter', 'VimResized', 'WinResized', 'WinNew', 'BufWinEnter' }, {
   callback = function()
     local width = vim.api.nvim_win_get_width(0)
-    vim.o.statusline = string.rep('−', width)
+    vim.o.statusline = string.rep('─', width)
   end,
 })
 
