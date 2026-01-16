@@ -4,10 +4,8 @@ set -euo pipefail
 dirs=$(zoxide query -l || true)
 [[ -z "${dirs:-}" ]] && { echo "No zoxide entries"; exit 1; }
 
-selected=$(
-  printf '%s\n' "$dirs" |
-    fzf --tmux center --border=rounded --prompt="Go to: "
-)
+selected=$(printf '%s\n' "$dirs" | fzf --tmux center --border=rounded --prompt="Go to: ") || exit 0
+
 [[ -z "${selected:-}" ]] && exit 0
 
 base=$(basename -- "$selected")
