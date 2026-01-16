@@ -6,6 +6,7 @@ require 'config.autocmds'
 -- my plugins
 -- require 'sonix.cowboy'
 -- require 'sonix.sql-runner'
+require 'sonix.dooin'
 
 -- plugins
 require 'plugins.gitsigns'
