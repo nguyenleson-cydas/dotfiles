@@ -1,18 +1,36 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
-dirs=$(zoxide query -l)
+dirs=$(zoxide query -l || true)
+[[ -z "${dirs:-}" ]] && { echo "No zoxide entries"; exit 1; }
 
-[[ -z "$dirs" ]] && { echo "No zoxide entries"; exit 1; }
-
-selected=$(printf '%s\n' "$dirs" | fzf --tmux center --border=rounded --prompt="Go to: ")
-
+selected=$(
+  printf '%s\n' "$dirs" |
+    fzf --tmux center --border=rounded --prompt="Go to: "
+)
 [[ -z "${selected:-}" ]] && exit 0
 
-session_name=$(basename "$selected")
+base=$(basename -- "$selected")
+
+# Make a tmux-safe session name
+session_name=$(
+  printf '%s' "$base" |
+    tr -c 'A-Za-z0-9_-' '_' |
+    sed -E 's/^_+//; s/_+$//; s/^-/_/; s/__+/_/g'
+)
+
+# Fallback if it becomes empty
+[[ -z "${session_name:-}" ]] && session_name="session"
 
 if [[ -z "${TMUX:-}" ]]; then
-  tmux new-session -A -s "$session_name" -c "$selected"
+  # Outside tmux: attach if exists else create
+  if tmux has-session -t "$session_name" 2>/dev/null; then
+    tmux attach -t "$session_name"
+  else
+    tmux new-session -s "$session_name" -c "$selected"
+  fi
 else
+  # Inside tmux: switch if exists else create detached then switch
   if tmux has-session -t "$session_name" 2>/dev/null; then
     tmux switch-client -t "$session_name"
   else

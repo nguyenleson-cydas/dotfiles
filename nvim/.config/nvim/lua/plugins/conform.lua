@@ -2,9 +2,7 @@ vim.pack.add { 'https://github.com/stevearc/conform.nvim.git' }
 
 local conform = require 'conform'
 local projects_using_v2 = {
-  vim.fn.expand '~/dev/intern/uranus/',
-  vim.fn.expand '~/dev/work/uranus/',
-  vim.fn.expand '~/learning/cake-crud/',
+  vim.fn.expand '~/d/uranus/',
 }
 
 conform.setup {
