@@ -53,9 +53,9 @@ set -gx FZF_DEFAULT_OPTS "$FZF_DEFAULT_OPTS \
     --ansi \
     --layout=reverse \
     --border=none \
-    --color=bg+:#002c38 \
-    --color=bg:#001419 \
-    --color=border:#063540 \
+    --color=bg+:-1 \
+    --color=bg:-1 \
+    --color=border:#664D00 \
     --color=fg:#9eabac \
     --color=gutter:#001419 \
     --color=header:#c94c16 \
@@ -67,7 +67,7 @@ set -gx FZF_DEFAULT_OPTS "$FZF_DEFAULT_OPTS \
     --color=prompt:#c94c16 \
     --color=query:#9eabac:regular \
     --color=scrollbar:#063540 \
-    --color=separator:#063540 \
+    --color=separator:#664D00 \
     --color=spinner:#c94c16 \
     "
 

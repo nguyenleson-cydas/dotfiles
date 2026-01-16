@@ -1,0 +1,3 @@
+vim.pack.add {'https://github.com/ruifm/gitlinker.nvim'}
+
+require"gitlinker".setup()
