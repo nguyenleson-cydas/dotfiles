@@ -1,8 +1,7 @@
 local state = { buf = nil, win = nil }
 
 local function current_daily_note_path()
-  local date = os.date '%Y-%m-%d'
-  return vim.fn.expand '~/notes/daily/' .. date .. '.md'
+  return vim.fn.expand '~/notes/main.md'
 end
 
 local function create_floating_win(buf)
@@ -64,4 +63,4 @@ local function toggle_daily_note()
   state.win = create_floating_win(buf)
 end
 
-vim.keymap.set('n', '<leader>nd', toggle_daily_note, { desc = 'Toggle [D]aily [N]ote (no focus)' })
+vim.keymap.set('n', '<leader>t', toggle_daily_note, { desc = 'Toggle [T]asks (no focus)' })

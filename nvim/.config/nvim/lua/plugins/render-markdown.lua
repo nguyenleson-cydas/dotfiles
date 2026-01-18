@@ -3,11 +3,14 @@ vim.pack.add { 'https://github.com/MeanderingProgrammer/render-markdown.nvim' }
 require('render-markdown').setup {
   enabled = false,
   render_modes = true,
-  preset = 'none',
+  preset = 'obsidian',
   completions = { lsp = { enabled = true } },
   pipe_table = { preset = 'round' },
   code = {
     width = 'block',
+  },
+  checkbox = {
+    enabled = false,
   },
 }
 

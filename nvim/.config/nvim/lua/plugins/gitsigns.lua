@@ -56,5 +56,5 @@ end, { desc = 'Set qflist all' })
 vim.keymap.set('n', '<leader>hq', gitsigns.setqflist, { desc = 'Set qflist' })
 
 -- Toggles
-vim.keymap.set('n', '<leader>tb', gitsigns.toggle_current_line_blame, { desc = 'Toggle current line blame' })
-vim.keymap.set('n', '<leader>tw', gitsigns.toggle_word_diff, { desc = 'Toggle word diff' })
+vim.keymap.set('n', '<leader>ub', gitsigns.toggle_current_line_blame, { desc = 'Toggle current line blame' })
+vim.keymap.set('n', '<leader>uW', gitsigns.toggle_word_diff, { desc = 'Toggle word diff' })
