@@ -21,7 +21,7 @@ conform.formatters_by_ft['php'] = function(bufnr)
       return { 'php_cs_fixer_v2' }
     end
   end
-  return { 'php_cs_fixer' }
+  return { 'php-cs-fixer' }
 end
 conform.formatters_by_ft['markdown'] = { 'prettier', 'markdownlint-cli2', 'markdown-toc' }
 conform.formatters_by_ft['markdown.mdx'] = { 'prettier', 'markdownlint-cli2', 'markdown-toc' }

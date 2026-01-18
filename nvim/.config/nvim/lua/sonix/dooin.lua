@@ -1,10 +1,9 @@
-local date = os.date '%Y-%m-%d'
-local daily_note_path = vim.fn.expand '~/notes/daily/' .. date .. '.md'
+local state = { buf = nil, win = nil }
 
-local state = {
-  buf = nil,
-  win = nil,
-}
+local function current_daily_note_path()
+  local date = os.date '%Y-%m-%d'
+  return vim.fn.expand '~/notes/daily/' .. date .. '.md'
+end
 
 local function create_floating_win(buf)
   local width = math.floor(vim.o.columns / 3)
@@ -26,15 +25,23 @@ local function create_floating_win(buf)
 end
 
 local function ensure_todo_buf()
+  local path = current_daily_note_path()
+
   if state.buf and vim.api.nvim_buf_is_valid(state.buf) then
-    return state.buf
+    local name = vim.api.nvim_buf_get_name(state.buf)
+    if name == path then
+      return state.buf
+    end
+
+    state.buf = nil
   end
 
   local buf = vim.api.nvim_create_buf(true, false)
-  vim.api.nvim_buf_set_name(buf, daily_note_path)
+
+  vim.api.nvim_buf_set_name(buf, path)
 
   vim.api.nvim_buf_call(buf, function()
-    vim.cmd('silent! edit ' .. vim.fn.fnameescape(daily_note_path))
+    vim.cmd('silent! edit ' .. vim.fn.fnameescape(path))
   end)
 
   vim.bo[buf].bufhidden = 'hide'
@@ -57,4 +64,4 @@ local function toggle_daily_note()
   state.win = create_floating_win(buf)
 end
 
-vim.keymap.set('n', '<leader>dn', toggle_daily_note, { desc = 'Toggle [D]aily [N]ote (no focus)' })
+vim.keymap.set('n', '<leader>nd', toggle_daily_note, { desc = 'Toggle [D]aily [N]ote (no focus)' })

@@ -54,6 +54,7 @@ local ensure_installed = {
   --- Note: If the docker-compose-langserver doesn't startup when entering a `docker-compose.yaml` file, make sure that the filetype is `yaml.docker-compose`. You can set with: `:set filetype=yaml.docker-compose`.
   'docker-compose-language-service',
   'marksman',
+  'tailwindcss',
 
   -- linting
   'stylua',
