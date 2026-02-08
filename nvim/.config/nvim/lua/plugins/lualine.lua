@@ -74,7 +74,7 @@ vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost', 'DirChanged' }, {
 })
 
 require('lualine').setup {
-  options = { theme = 'auto', component_separators = '', section_separators = '' },
+  options = { theme = 'catppuccin', component_separators = '', section_separators = '' },
   tabline = {
     lualine_c = {
       {
@@ -87,7 +87,6 @@ require('lualine').setup {
           return string.format('%d/%d', cur, total)
         end,
         padding = { left = 1, right = 1 },
-        color = { bg = '#001419', fg = '#B28500' },
       },
       { 'filetype', icon_only = true, colored = true, padding = { left = 1, right = 0 } },
       {
@@ -97,7 +96,14 @@ require('lualine').setup {
         function()
           return vim.b.git_repo_dir or ''
         end,
-        color = { fg = '#586E75' },
+        color = function()
+          local ok, palettes = pcall(require, 'catppuccin.palettes')
+          if ok then
+            local c = palettes.get_palette()
+            return { fg = c.overlay0 }
+          end
+          return { fg = '#6c7086' }
+        end,
       },
       {
         'diagnostics',

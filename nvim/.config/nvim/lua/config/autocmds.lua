@@ -51,23 +51,23 @@ vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
 })
 
 -- Create an autocmd that runs on both VimEnter and ColorScheme events
-vim.api.nvim_create_autocmd('ColorScheme', {
-  group = vim.api.nvim_create_augroup('CustomHighlights', { clear = true }),
-  pattern = '*', -- Apply to all color schemes
-  callback = function()
-    vim.api.nvim_set_hl(0, 'FloatBorder', { fg = '#586E75' })
-    vim.api.nvim_set_hl(0, 'cursorline', { bg = '#103956' })
-    vim.api.nvim_set_hl(0, 'cursorlinenr', { fg = '#B58900', bold = true })
-    vim.api.nvim_set_hl(0, 'visual', { bg = '#1B6497' })
-    vim.api.nvim_set_hl(0, 'whichkeyborder', { link = 'floatborder' })
-    vim.api.nvim_set_hl(0, 'snackspickerborder', { link = 'floatborder' })
-    vim.api.nvim_set_hl(0, 'blinkcmpmenuborder', { link = 'floatborder' })
-    vim.api.nvim_set_hl(0, 'blinkcmpdocborder', { link = 'floatborder' })
-    vim.api.nvim_set_hl(0, 'blinkcmpmenuselection', { link = 'CursorLine' })
-    vim.api.nvim_set_hl(0, 'StatusLine', { link = 'Normal' })
-    vim.api.nvim_set_hl(0, 'StatusLineNC', { link = 'Normal' })
-  end,
-})
+-- vim.api.nvim_create_autocmd('ColorScheme', {
+--   group = vim.api.nvim_create_augroup('CustomHighlights', { clear = true }),
+--   pattern = '*', -- Apply to all color schemes
+--   callback = function()
+--     vim.api.nvim_set_hl(0, 'FloatBorder', { fg = '#586E75' })
+--     vim.api.nvim_set_hl(0, 'cursorline', { bg = '#103956' })
+--     vim.api.nvim_set_hl(0, 'cursorlinenr', { fg = '#B58900', bold = true })
+--     vim.api.nvim_set_hl(0, 'visual', { bg = '#1B6497' })
+--     vim.api.nvim_set_hl(0, 'whichkeyborder', { link = 'floatborder' })
+--     vim.api.nvim_set_hl(0, 'snackspickerborder', { link = 'floatborder' })
+--     vim.api.nvim_set_hl(0, 'blinkcmpmenuborder', { link = 'floatborder' })
+--     vim.api.nvim_set_hl(0, 'blinkcmpdocborder', { link = 'floatborder' })
+--     vim.api.nvim_set_hl(0, 'blinkcmpmenuselection', { link = 'CursorLine' })
+--     vim.api.nvim_set_hl(0, 'StatusLine', { link = 'Normal' })
+--     vim.api.nvim_set_hl(0, 'StatusLineNC', { link = 'Normal' })
+--   end,
+-- })
 
 -- Highlight on yank
 vim.api.nvim_create_autocmd('TextYankPost', {

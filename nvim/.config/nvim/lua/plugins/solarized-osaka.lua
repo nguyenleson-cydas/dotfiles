@@ -6,4 +6,4 @@ require('solarized-osaka').setup {
   floats = 'transparent', -- style for floating windows
 }
 
-vim.cmd [[colorscheme solarized-osaka]]
+-- vim.cmd [[colorscheme solarized-osaka]]

@@ -2,7 +2,7 @@ vim.pack.add { 'https://github.com/mfussenegger/nvim-lint.git' }
 
 local lint = require 'lint'
 local phpstan = lint.linters.phpstan
-local sqlfluff = lint.linters.sqlfluff
+-- local sqlfluff = lint.linters.sqlfluff
 local markdownlint = lint.linters['markdownlint-cli2']
 phpstan.args = {
   'analyse',
@@ -10,11 +10,11 @@ phpstan.args = {
   '--memory-limit=1G',
   '--no-progress',
 }
-sqlfluff.args = { 'lint', '--format', 'json', '--dialect', 'mysql', '-' }
+-- sqlfluff.args = { 'lint', '--format', 'json', '--dialect', 'mysql', '-' }
 markdownlint.args = { '--config', vim.fn.expand '~/.markdownlint-cli2.yaml', '--' }
 lint.linters_by_ft = {
   markdown = { 'markdownlint-cli2' },
-  sql = { 'sqlfluff' },
+  -- sql = { 'sqlfluff' },
   php = { 'phpstan' },
 }
 local lint_augroup = vim.api.nvim_create_augroup('lint', { clear = true })

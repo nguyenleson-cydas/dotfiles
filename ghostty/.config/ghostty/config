@@ -1,15 +1,37 @@
-# cmd+shift+, to reload the config
-theme = solarized_osaka_dark
-background-opacity = 0.8
-background-blur-radius = 0
-minimum-contrast=1.1
-font-family = "PlemolJP Console NF"
-font-style = "Medium"
-font-size = 15
-cursor-style = block
-cursor-style-blink = true
+# # cmd+shift+, to reload the config
+# theme = solarized_osaka_dark
+theme = Catppuccin Mocha
 custom-shader = ~/.config/ghostty/shaders/cursor_smear.glsl
 macos-option-as-alt = left
-keybind = alt+left=unbind
-keybind = alt+right=unbind
-macos-titlebar-style=transparent
+# keybind = alt+left=unbind
+# keybind = alt+right=unbind
+# macos-titlebar-style=transparent
+
+# --- Liquid Glass look (macOS 26+) ---
+# window-theme = system
+macos-titlebar-style = transparent
+
+# Frosted glass
+background = #000000
+background-opacity = 0.85
+background-opacity-cells = true
+background-blur = true
+
+# Nice macOS-ish spacing & colors
+window-padding-x = 10
+window-padding-y = 10
+window-colorspace = display-p3
+
+# Optional: Apple-ish font feel
+font-family = "SF Mono"
+font-size = 14
+font-thicken = true
+font-thicken-strength = 40
+
+# Optional: keep text readable on glass
+minimum-contrast = 2.5
+
+# Optional: theme follows system light/dark
+# theme = light:GitHub Light Default,dark:GitHub Dark Dimmed
+
+auto-update-channel = tip
