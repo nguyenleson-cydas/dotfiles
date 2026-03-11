@@ -15,15 +15,10 @@ export XDG_CONFIG_HOME=$HOME/.config
 # Editor configuration
 export EDITOR=nvim
 
-# Starship prompt configuration
-export STARSHIP_CONFIG=$XDG_CONFIG_HOME/starship/starship.toml
-
-# Eza configuration
-export EZA_CONFIG_DIR=$XDG_CONFIG_HOME/eza
-
 # PATH configuration
 export PATH="$HOME/.local/share/bob/nvim-bin:${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$HOME/.local/bin:$HOME/bin:$HOME/.composer/vendor/bin:$PATH"
 export PATH="/opt/homebrew/opt/mysql@8.0/bin:$PATH"
+
 
 # ============================================================================
 # ZINIT PLUGIN MANAGER
@@ -109,9 +104,11 @@ alias c='clear'
 alias ..='cd ..'
 alias ...='cd ../..'
 
-# Project-specific aliases
-alias us='ASDF_NODEJS_VERSION=10.15.2 npm --prefix $HOME/dev/intern/uranus/app/vue start'
-alias uw='ASDF_NODEJS_VERSION=10.15.2 npm --prefix $HOME/dev/intern/uranus/app/vue run watch'
+export ZSH="$HOME/.oh-my-zsh"
+ZSH_THEME="robbyrussell"
+plugins=(git)
+
+source $ZSH/oh-my-zsh.sh
 
 # ============================================================================
 # SHELL INTEGRATIONS
@@ -121,34 +118,3 @@ source <(fzf --zsh)
 
 # Zoxide (smart cd)
 eval "$(zoxide init --cmd cd zsh)"
-
-# Starship prompt initialization
-eval "$(starship init zsh)"
-
-# ============================================================================
-# APPLICATION-SPECIFIC SETTINGS
-# ============================================================================
-# FZF default options and color scheme
-export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
-  --highlight-line \
-  --info=inline-right \
-  --ansi \
-  --layout=reverse \
-  --border=none
-  --color=bg+:#002c38 \
-  --color=bg:#001419 \
-  --color=border:#063540 \
-  --color=fg:#9eabac \
-  --color=gutter:#001419 \
-  --color=header:#c94c16 \
-  --color=hl+:#c94c16 \
-  --color=hl:#c94c16 \
-  --color=info:#637981 \
-  --color=marker:#c94c16 \
-  --color=pointer:#c94c16 \
-  --color=prompt:#c94c16 \
-  --color=query:#9eabac:regular \
-  --color=scrollbar:#063540 \
-  --color=separator:#063540 \
-  --color=spinner:#c94c16 \
-"

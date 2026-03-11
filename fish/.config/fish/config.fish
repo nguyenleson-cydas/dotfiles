@@ -1,39 +1,3 @@
-# ==================== COLOR THEME: SOLARIZED OSAKA ====================
-# Color Palette
-set -l foreground 839395
-set -l selection 1a6397
-set -l base01 576d74
-set -l red db302d
-set -l orange c94c16
-set -l yellow b28500
-set -l green 849900
-set -l purple 6d71c4
-set -l cyan 29a298
-set -l pink d23681
-
-# Syntax Highlighting Colors
-set -g fish_color_normal $foreground
-set -g fish_color_command $cyan
-set -g fish_color_keyword $pink
-set -g fish_color_quote $yellow
-set -g fish_color_redirection $foreground
-set -g fish_color_end $orange
-set -g fish_color_error $red
-set -g fish_color_param $purple
-set -g fish_color_comment $base01
-set -g fish_color_selection --background=$selection
-set -g fish_color_search_match --background=$selection
-set -g fish_color_operator $green
-set -g fish_color_escape $pink
-set -g fish_color_autosuggestion $base01
-
-# Completion Pager Colors
-set -g fish_pager_color_progress $base01
-set -g fish_pager_color_prefix $cyan
-set -g fish_pager_color_completion $foreground
-set -g fish_pager_color_description $base01
-set -g fish_pager_color_selected_background --background=$selection
-
 # ==================== PATH CONFIGURATION ====================
 fish_add_path ~/.local/share/bob/nightly/bin
 fish_add_path ~/.local/bin
@@ -47,29 +11,6 @@ set -gx STARSHIP_CONFIG "$XDG_CONFIG_HOME/starship/starship.toml"
 set -gx EZA_CONFIG_DIR "$XDG_CONFIG_HOME/eza"
 set -gx LC_TIME ja_JP.UTF-8
 # FZF configuration
-set -gx FZF_DEFAULT_OPTS "$FZF_DEFAULT_OPTS \
-    --highlight-line \
-    --info=inline-right \
-    --ansi \
-    --layout=reverse \
-    --border=none \
-    --color=bg+:-1 \
-    --color=bg:-1 \
-    --color=border:#664D00 \
-    --color=fg:#9eabac \
-    --color=gutter:#001419 \
-    --color=header:#c94c16 \
-    --color=hl+:#c94c16 \
-    --color=hl:#c94c16 \
-    --color=info:#637981 \
-    --color=marker:#c94c16 \
-    --color=pointer:#c94c16 \
-    --color=prompt:#c94c16 \
-    --color=query:#9eabac:regular \
-    --color=scrollbar:#063540 \
-    --color=separator:#664D00 \
-    --color=spinner:#c94c16 \
-    "
 
 # ==================== ASDF CONFIGURATION CODE  ====================
 
