@@ -19,7 +19,6 @@ export EDITOR=nvim
 export PATH="$HOME/.local/share/bob/nvim-bin:${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$HOME/.local/bin:$HOME/bin:$HOME/.composer/vendor/bin:$PATH"
 export PATH="/opt/homebrew/opt/mysql@8.0/bin:$PATH"
 
-
 # ============================================================================
 # ZINIT PLUGIN MANAGER
 # ============================================================================
