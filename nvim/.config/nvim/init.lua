@@ -56,33 +56,31 @@ vim.opt.rtp:prepend(lazypath)
 -- =========================
 require('lazy').setup {
   {
-    'mason-org/mason.nvim',
-    opts = {},
-  },
-  -- LSP configs
-  {
-    'neovim/nvim-lspconfig',
-    config = function()
-      vim.lsp.config('lua_ls', {
-        settings = {
-          Lua = {
-            diagnostics = {
-              globals = { 'vim' },
+    'mason-org/mason-lspconfig.nvim',
+    opts = {
+      ensure_installed = { 'lua_ls', 'stylua' },
+    },
+    dependencies = {
+      { 'mason-org/mason.nvim', opts = {} },
+      {
+        'neovim/nvim-lspconfig',
+        config = function()
+          vim.lsp.config('lua_ls', {
+            settings = {
+              Lua = {
+                diagnostics = {
+                  globals = { 'vim' },
+                },
+                workspace = {
+                  checkThirdParty = false,
+                },
+              },
             },
-            workspace = {
-              checkThirdParty = false,
-            },
-          },
-        },
-      })
-      -- Enable only servers you actually installed
-      vim.lsp.enable {
-        'lua_ls',
-        'intelephense',
-      }
-    end,
+          })
+        end,
+      },
+    },
   },
-
   -- Treesitter
   {
     'nvim-treesitter/nvim-treesitter',
