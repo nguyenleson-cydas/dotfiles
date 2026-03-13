@@ -10,7 +10,6 @@ set -gx EDITOR nvim
 set -gx STARSHIP_CONFIG "$XDG_CONFIG_HOME/starship/starship.toml"
 set -gx EZA_CONFIG_DIR "$XDG_CONFIG_HOME/eza"
 set -gx LC_TIME ja_JP.UTF-8
-# FZF configuration
 
 # ==================== ASDF CONFIGURATION CODE  ====================
 
