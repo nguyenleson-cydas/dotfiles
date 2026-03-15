@@ -58,7 +58,7 @@ require('lazy').setup {
   {
     'mason-org/mason-lspconfig.nvim',
     opts = {
-      ensure_installed = { 'lua_ls', 'stylua' },
+      ensure_installed = { 'lua_ls', 'stylua', 'intelephense' },
     },
     dependencies = {
       { 'mason-org/mason.nvim', opts = {} },
@@ -81,7 +81,6 @@ require('lazy').setup {
       },
     },
   },
-  -- Treesitter
   {
     'nvim-treesitter/nvim-treesitter',
     lazy = false,
@@ -91,7 +90,6 @@ require('lazy').setup {
         install_dir = vim.fn.stdpath 'data' .. '/site',
       }
 
-      -- Auto-install parsers you need
       require('nvim-treesitter').install {
         'lua',
         'vim',
@@ -114,7 +112,6 @@ require('lazy').setup {
         'sql',
       }
 
-      -- Enable highlight + folds using built-in Neovim features
       vim.api.nvim_create_autocmd('FileType', {
         callback = function(args)
           local filetype = args.match
@@ -129,8 +126,6 @@ require('lazy').setup {
       })
     end,
   },
-
-  -- Git signs
   {
     'lewis6991/gitsigns.nvim',
     config = function()
@@ -150,14 +145,12 @@ require('lazy').setup {
       }
     end,
   },
-
   {
     'stevearc/conform.nvim',
     event = { 'BufWritePre' },
     cmd = { 'ConformInfo' },
     keys = {
       {
-        -- Customize or remove this keymap to your liking
         '<leader>f',
         function() require('conform').format { async = true } end,
         mode = '',
@@ -167,7 +160,6 @@ require('lazy').setup {
     opts = {
       formatters_by_ft = {
         lua = { 'stylua' },
-        -- Conform will run the first available formatter
         javascript = { 'prettierd', 'prettier', stop_after_first = true },
         vue = { 'prettierd', 'prettier', stop_after_first = true },
         php = { 'php_cs_fixer_v2' },
